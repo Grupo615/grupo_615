@@ -38,17 +38,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+    synchronized (this) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
-        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
 
-            float x=Math.round(event.values[0] * 10f) / 10f; // redondeo a 1 decimal
-            float y=Math.round(event.values[1] * 10f) / 10f;
-
-            pelota.mover(x,y);
+            float x = (Math.round(event.values[0] * 10f) / 10f);
+            float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
+            pelota.mover(x, y);
             pelota.invalidate();
 
 
         }
+    }
     }
 
     @Override
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected  void onResume(){
         super.onResume();
         // registrarse a los eventos del sensor
-        sensorManager.registerListener(this,acelerometro,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this,acelerometro,SensorManager.SENSOR_DELAY_GAME);
     }
     protected  void onPause(){
         super.onPause();

@@ -10,11 +10,13 @@ import android.view.View;
 
 public class Pelota extends View  {
     Paint paint;
-
-    float posX=40,posY=40;
-    float anteriorX=0,anteriorY=0;
+    float ancho; // de canvas
+    float largo;// de canvas
+    float radio=40;
+    float posX=40,posY=40; // posiciones iniciales
+    float  anteriorX=0,anteriorY=0;
     boolean primera=true;
-    final String IZQUIERDA="IZQUIERDA",DERECHA="DERECHA",ARRIBA="ARRIBA",ABAJO="ABAJO";
+
     public Pelota(Context context){
         super(context);
 
@@ -23,10 +25,14 @@ public class Pelota extends View  {
     }
     protected  void onDraw(Canvas canvas){
         //canvas.drawColor(Color.BLUE);
-        canvas.drawCircle(posX,posY,40,paint); //dibuja el circulo
+        this.ancho=canvas.getWidth();
+        this.largo=canvas.getHeight();
+        canvas.drawCircle(posX,posY,radio,paint); //dibuja el circulo
     }
     public  void mover(float x, float y ) {
-
+        double margenSuperior=1.5; // para ignorar los movimientos minimos
+        double margenInferior=-1.5;
+        float espacioMovimiento=4; // desplazamiento de pelota
         // para iniciarlizar las variables anteriorX y anteriorY
         if(primera==true){
             primera=false;
@@ -36,18 +42,18 @@ public class Pelota extends View  {
         }
 // se mueve si cambio el x
         if (  anteriorX !=x) {
-            if(x<0)
-                posX += 10;
-            else
-                posX-=10;
+            if(x<margenInferior && posX+this.radio<this.ancho)
+                posX += espacioMovimiento;
+            else if (x>margenSuperior && posX-this.radio>0)
+                posX-=espacioMovimiento;
             anteriorX = x;
         }
         // se mueve si cambio Y
         if ( anteriorY != y) {
-            if(y<0)
-                posY -= 10;
-            else
-                posY+=10;
+            if(y<margenInferior && posY-this.radio>0)
+                posY -= espacioMovimiento;
+            else if(y>margenSuperior && posY+this.radio<this.largo)
+                posY+=espacioMovimiento;
             anteriorY = y;
         }
 
