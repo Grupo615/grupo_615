@@ -1,8 +1,4 @@
 package com.example.tp2;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-
 import android.content.Context;
 
 import android.hardware.Sensor;
@@ -13,8 +9,10 @@ import android.os.Bundle;
 
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+public class Juego extends AppCompatActivity implements SensorEventListener {
     Pelota pelota;
     SensorManager sensorManager;
     Sensor acelerometro;
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_juego);
 
         RelativeLayout layout1 = (RelativeLayout) findViewById(R.id.layout1); // obtiene el layout
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -38,18 +36,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-    synchronized (this) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        synchronized (this) {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
 
-            float x = (Math.round(event.values[0] * 10f) / 10f);
-            float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
-            pelota.mover(x, y);
-            pelota.invalidate();
+                float x = (Math.round(event.values[0] * 10f) / 10f);
+                float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
+                pelota.mover(x, y);
+                pelota.invalidate();
 
 
+            }
         }
-    }
     }
 
     @Override
