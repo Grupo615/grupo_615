@@ -16,6 +16,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     Pelota pelota;
     SensorManager sensorManager;
     Sensor acelerometro;
+    Tablero tablero;
 
 
     @Override
@@ -27,6 +28,8 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         pelota = new Pelota(this);
+        tablero= new Tablero(this);
+        layout1.addView(tablero);
         layout1.addView(pelota); // agrega la pelota al layout
 
 
