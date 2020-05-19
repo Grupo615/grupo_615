@@ -45,7 +45,7 @@ public class Pelota extends View  {
     public  void mover(float x, float y ) {
         double margenSuperior=1.5; // para ignorar los movimientos minimos
         double margenInferior=-1.5;
-        float espacioMovimiento=4; // desplazamiento de pelota
+        float espacioMovimiento=this.ancho /135; // desplazamiento de pelota
         // para iniciarlizar las variables anteriorX y anteriorY
         if(primera==true){
             primera=false;
