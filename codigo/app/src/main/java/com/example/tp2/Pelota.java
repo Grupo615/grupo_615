@@ -26,12 +26,12 @@ public class Pelota extends View  {
     public Pelota(Context context){
         super(context);
 
-        bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.pelota);// crea un mapa de bit de la imagen
+        bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.pelota2);// crea un mapa de bit de la imagen
         paint= new Paint();
     }
     public void onSizeChanged(int  a ,int b , int c , int d){
-        mWidth = getWidth() / 4;
-        mHeight=getHeight()/6;
+        mWidth = getWidth() / 7;
+        mHeight=getHeight()/11;
         pelota=Bitmap.createScaledBitmap(bitmap,mWidth,mHeight,true); // redimensiona el bitmap
     }
     protected  void onDraw(Canvas canvas){
