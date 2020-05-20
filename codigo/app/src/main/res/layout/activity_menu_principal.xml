@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuPrincipal">
+    tools:context=".MenuPrincipal"
+    android:background="#202732">
 
     <Button
         android:id="@+id/button5"
@@ -16,5 +17,6 @@
         android:onClick="iniciarJuego"
         android:text="jugar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/boton_rounded"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
