@@ -22,10 +22,10 @@ public class Obstaculo extends View {
         this.horizontal=horizontal;
         if(horizontal)
             //PONER OBSTACULO HORIZONTAL
-           // bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.);
+            bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.obstaculo);
         else
             //PONER OBSTACUL VERTICAL
-            bitmap= BitmapFactory.decodeResource(getResources(),);
+            bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.obstaculo);
     }
     public void onSizeChanged(int a ,int b,int c,int d){
         mHeigth=getHeight()/10;
