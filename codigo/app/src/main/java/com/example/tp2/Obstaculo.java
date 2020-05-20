@@ -29,8 +29,8 @@ public class Obstaculo extends View {
     }
 
     public void onSizeChanged(int a, int b, int c, int d) {
-        mHeigth = getHeight() / 10;
-        mWidth = getWidth() / 10;
+        mHeigth = getHeight() / 15;
+        mWidth = getWidth() / 5;
         obstaculo = Bitmap.createScaledBitmap(bitmap, mWidth, mHeigth, true);
 
     }
