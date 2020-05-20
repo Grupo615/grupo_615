@@ -16,7 +16,7 @@ public class LoginUsuario extends AppCompatActivity {
 
     }
     public void irMenu(View v){
-        Intent intent=new Intent(LoginUsuario.this,MenuPrincipal.class);
+        Intent intent= new Intent(LoginUsuario.this,MenuPrincipal.class);
         startActivity(intent);
     }
 
