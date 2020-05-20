@@ -12,14 +12,19 @@ public class Obstaculo extends View {
     private Bitmap obstaculo;
     private int mHeigth;
     private int mWidth;
+    private int divAlto;
+    private int divAncho;
     private int posX;
     private int posY;
 
-    public Obstaculo(Context context, int posX, int posY, boolean horizontal) {
+    public Obstaculo(Context context, int posX, int posY, int divAlto,int divAncho,boolean horizontal) {
         super(context);
         this.posX = posX;
         this.posY = posY;
         this.horizontal = horizontal;
+        this.divAlto=divAlto;
+        this.divAncho=divAncho;
+
         if (horizontal)
             //PONER OBSTACULO HORIZONTAL
             bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.obstaculo);
@@ -29,11 +34,24 @@ public class Obstaculo extends View {
     }
 
     public void onSizeChanged(int a, int b, int c, int d) {
-        mHeigth = getHeight() / 15;
-        mWidth = getWidth() / 5;
+        mHeigth = getHeight() / divAlto;
+        mWidth = getWidth() / divAncho;
         obstaculo = Bitmap.createScaledBitmap(bitmap, mWidth, mHeigth, true);
 
     }
+    public int getPosY(){
+        return this.posY;
+    }
+    public  int getPosX(){
+        return  this.posX;
+    }
+    public int getmHeigth(){
+        return this.mHeigth;
+    }
+    public int getmWidth(){
+        return this.mWidth;
+    }
+
 
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(obstaculo, posX, posY, null);
