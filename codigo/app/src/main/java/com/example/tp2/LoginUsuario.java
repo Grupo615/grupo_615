@@ -19,4 +19,10 @@ public class LoginUsuario extends AppCompatActivity {
         Intent intent=new Intent(LoginUsuario.this,MenuPrincipal.class);
         startActivity(intent);
     }
+
+    public void irRegistro(View view){
+        Intent intent= new Intent(LoginUsuario.this,RegistroUsuario.class);
+        startActivity(intent);
+    }
+
 }
