@@ -20,6 +20,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     Sensor proximidad;
     Tablero tablero;
     boolean play = true;
+    Obstaculo obstaculo1,obstaculo2,obstaculo3;
 
 
     @Override
@@ -33,9 +34,14 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         proximidad = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         pelota = new Pelota(this);
         tablero = new Tablero(this);
+        obstaculo1 = new Obstaculo(this,300,50,true);
+        obstaculo2 = new Obstaculo(this,500,500,false);
+        obstaculo3 = new Obstaculo(this,20,700,false);
         layout1.addView(tablero);
         layout1.addView(pelota); // agrega la pelota al layout
-
+        layout1.addView(obstaculo1);
+        layout1.addView(obstaculo2);
+        layout1.addView(obstaculo3);
 
     }
 
@@ -44,7 +50,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
 
         synchronized (this) {
-            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && play==true) {
 
 
                 float x = (Math.round(event.values[0] * 10f) / 10f);
