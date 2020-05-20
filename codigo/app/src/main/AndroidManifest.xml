@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Inicio">
+        <activity android:name=".LoginUsuario">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,6 @@
         <activity android:name=".MenuPrincipal"></activity>
         <activity android:name=".Juego"></activity>
         <activity android:name=".RegistroUsuario"></activity>
-        <activity android:name=".LoginUsuario"></activity>
 
     </application>
 
