@@ -1,4 +1,5 @@
 package com.example.tp2;
+
 import android.content.Context;
 
 import android.hardware.Sensor;
@@ -16,7 +17,9 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     Pelota pelota;
     SensorManager sensorManager;
     Sensor acelerometro;
+    Sensor proximidad;
     Tablero tablero;
+    boolean play = true;
 
 
     @Override
@@ -27,8 +30,9 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         RelativeLayout layout1 = (RelativeLayout) findViewById(R.id.layout1); // obtiene el layout
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        proximidad = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         pelota = new Pelota(this);
-        tablero= new Tablero(this);
+        tablero = new Tablero(this);
         layout1.addView(tablero);
         layout1.addView(pelota); // agrega la pelota al layout
 
@@ -51,18 +55,34 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
 
             }
         }
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
+
+            if (event.values[0] == 0) {
+                if (play) {
+                    play = false;
+                    tablero.setPlay(play);
+                } else {
+                    play = true;
+                    tablero.setPlay(play);
+                }
+            }
+
+        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-    protected  void onResume(){
+
+    protected void onResume() {
         super.onResume();
         // registrarse a los eventos del sensor
-        sensorManager.registerListener(this,acelerometro,SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, proximidad, SensorManager.SENSOR_DELAY_GAME);
     }
-    protected  void onPause(){
+
+    protected void onPause() {
         super.onPause();
         // eliminar registro a evento de sensor
         sensorManager.unregisterListener(this);

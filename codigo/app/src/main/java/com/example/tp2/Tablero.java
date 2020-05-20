@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.View;
 
 public class Tablero extends View {
@@ -11,9 +12,14 @@ public class Tablero extends View {
     Bitmap tablero;
     private int mHeigth;
     private int mWidth;
+    Paint paint;
+    boolean play=true;
+
+
     public Tablero(Context context){
         super(context);
         bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.madera);
+        paint=new Paint();
     }
     public void onSizeChanged(int a, int b, int c , int d){
         mHeigth=getHeight();
@@ -21,7 +27,13 @@ public class Tablero extends View {
         tablero=Bitmap.createScaledBitmap(bitmap,mWidth,mHeigth,true);
 
     }
+    public void setPlay(boolean play){
+        this.play=play;
+        invalidate();
+    }
     public void onDraw(Canvas canvas){
         canvas.drawBitmap(tablero,0,0,null);
+        if(!this.play)
+        canvas.drawText("PAUSA",getWidth()/2,getHeight()/2,paint);
     }
 }

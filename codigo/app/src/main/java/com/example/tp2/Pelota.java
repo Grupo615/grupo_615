@@ -42,7 +42,9 @@ public class Pelota extends View  {
         canvas.drawBitmap(pelota,posX,posY,null);
     }
 
+
     public  void mover(float x, float y ) {
+
         double margenSuperior=1.5; // para ignorar los movimientos minimos
         double margenInferior=-1.5;
         float espacioMovimiento=this.ancho /135; // desplazamiento de pelota
