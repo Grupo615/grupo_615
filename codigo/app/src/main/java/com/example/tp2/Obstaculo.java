@@ -14,10 +14,10 @@ public class Obstaculo extends View {
     private int mWidth;
     private int divAlto;
     private int divAncho;
-    private int posX;
-    private int posY;
+    private float posX;
+    private float posY;
 
-    public Obstaculo(Context context, int posX, int posY, int divAlto,int divAncho,boolean horizontal) {
+    public Obstaculo(Context context, float posX, float posY, int divAlto,int divAncho,boolean horizontal) {
         super(context);
         this.posX = posX;
         this.posY = posY;
@@ -39,10 +39,10 @@ public class Obstaculo extends View {
         obstaculo = Bitmap.createScaledBitmap(bitmap, mWidth, mHeigth, true);
 
     }
-    public int getPosY(){
+    public float getPosY(){
         return this.posY;
     }
-    public  int getPosX(){
+    public  float getPosX(){
         return  this.posX;
     }
     public int getmHeigth(){
@@ -55,5 +55,11 @@ public class Obstaculo extends View {
 
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(obstaculo, posX, posY, null);
+    }
+    public boolean existeObstaculo(float posX,float posY){
+        if(posY>=this.posY && posY<=this.posY+this.mHeigth && posX>=this.posX && posX<=this.posX+mWidth)
+            return true;
+        return false;
+
     }
 }

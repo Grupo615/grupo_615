@@ -23,7 +23,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     Sensor proximidad;
     Tablero tablero;
     boolean play = true;
-    Obstaculo obstaculo1, obstaculo2, obstaculo3;
+    Obstaculo obstaculo1, obstaculo2, obstaculo3,obstaculo4,obstaculo5,obstaculo6,obstaculo7,obstaculo8;
     List<Obstaculo> listaObs;
 
 
@@ -49,12 +49,23 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
 
 
     public void definirObstaculos() {
-        obstaculo1 = new Obstaculo(this, 0, 1, 15,1,true);
-        obstaculo2 = new Obstaculo(this, 500, 500,15,15, false);
-        obstaculo3 = new Obstaculo(this, 20, 700, 15,15,false);
+        obstaculo1 = new Obstaculo(this, 0, 100, 15,3,true);
+        obstaculo2 = new Obstaculo(this, 300, 200,15,3, true);
+        obstaculo3 = new Obstaculo(this, 400, 300, 15,3,true);
+        obstaculo4 = new Obstaculo(this, 30, 400, 15,3,true);
+        obstaculo5 = new Obstaculo(this, 100, 500, 15,3,true);
+        obstaculo6 = new Obstaculo(this, 60, 600, 15,3,true);
+        obstaculo7 = new Obstaculo(this, 600, 700, 15,3,true);
+        obstaculo8 = new Obstaculo(this, 200, 800, 15,3,true);
+
         listaObs.add(obstaculo1);
         listaObs.add(obstaculo2);
         listaObs.add(obstaculo3);
+        listaObs.add(obstaculo4);
+        listaObs.add(obstaculo5);
+        listaObs.add(obstaculo6);
+        listaObs.add(obstaculo7);
+        listaObs.add(obstaculo8);
 
     }
 
