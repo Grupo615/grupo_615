@@ -8,17 +8,18 @@
     tools:context=".RegistroUsuario">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/bttnRegistro"
         android:layout_width="336dp"
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/boton_rounded"
+        android:onClick="ComprobarConexionRegistro"
         android:text="Registrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText12"
+        app:layout_constraintTop_toBottomOf="@+id/eTGrup"
         app:layout_constraintVertical_bias="0.115" />
 
     <ImageView
@@ -43,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etNom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -55,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/eTApe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -64,10 +65,10 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/etNom" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/eTDni"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -76,10 +77,10 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/eTApe" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/eTEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -88,10 +89,10 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/eTDni" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/eTContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -100,10 +101,10 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+        app:layout_constraintTop_toBottomOf="@+id/eTEmail" />
 
     <EditText
-        android:id="@+id/editText11"
+        android:id="@+id/eTcomision"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -113,10 +114,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.318"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+        app:layout_constraintTop_toBottomOf="@+id/eTContraseña" />
 
     <EditText
-        android:id="@+id/editText12"
+        android:id="@+id/eTGrup"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -125,7 +126,7 @@
         android:ems="10"
         android:hint="GRUPO"
         android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/editText11"
-        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+        app:layout_constraintStart_toEndOf="@+id/eTcomision"
+        app:layout_constraintTop_toBottomOf="@+id/eTContraseña" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
