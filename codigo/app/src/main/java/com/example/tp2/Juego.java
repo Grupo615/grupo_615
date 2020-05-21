@@ -49,7 +49,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
 
 
     public void definirObstaculos() {
-        obstaculo1 = new Obstaculo(this, 0, 100, 15,3,true);
+        //obstaculo1 = new Obstaculo(this, 0, 100, 15,3,true);
         obstaculo2 = new Obstaculo(this, 300, 200,15,3, true);
         obstaculo3 = new Obstaculo(this, 400, 300, 15,3,true);
         obstaculo4 = new Obstaculo(this, 30, 400, 15,3,true);
@@ -58,7 +58,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         obstaculo7 = new Obstaculo(this, 600, 700, 15,3,true);
         obstaculo8 = new Obstaculo(this, 200, 800, 15,3,true);
 
-        listaObs.add(obstaculo1);
+      //  listaObs.add(obstaculo1);
         listaObs.add(obstaculo2);
         listaObs.add(obstaculo3);
         listaObs.add(obstaculo4);

@@ -26,6 +26,9 @@ public class Pelota extends View {
     private int mHeight;
     private Bitmap pelota;
     float espacioMovimiento = this.ancho / 135;
+    float centroX;
+    float centroY;
+    float radio;
 
     public Pelota(Context context) {
         super(context);
@@ -36,7 +39,8 @@ public class Pelota extends View {
 
     public void onSizeChanged(int a, int b, int c, int d) {
         mWidth = getWidth() / 7;
-        mHeight = getHeight() / 11;
+        mHeight = getWidth()/7;
+        radio=mWidth/2;
         pelota = Bitmap.createScaledBitmap(bitmap, mWidth, mHeight, true); // redimensiona el bitmap
     }
 
@@ -54,6 +58,8 @@ public class Pelota extends View {
 
         double margenSuperior = 1.5; // para ignorar los movimientos minimos
         double margenInferior = -1.5;
+        centroX=posX+radio;
+        centroY=posY+radio;
         // desplazamiento de pelota
         // para iniciarlizar las variables anteriorX y anteriorY
         if (primera == true) {
@@ -63,7 +69,7 @@ public class Pelota extends View {
             return;
         }
         List<Boolean> puede = sinObstaculo(listaObs); // le paso la lista de obstaculos y me dice para donde se puede mover
-        //arriba,abajo,izquierda,derecha
+        //abajo,arriba,izquierda,derecha
 // se mueve si cambio el x
         if (anteriorX != x) {
             if (puede.get(3) && x < margenInferior && posX + this.mWidth < this.ancho) //mueve hacia la derecha
@@ -98,12 +104,17 @@ public class Pelota extends View {
         boolean abajo = true, arriba = true, izquierda = true, derecha = true;
         float posYAbajoPelota = this.posY + this.mHeight;
         float posYAbajoPelotaFinal = posYAbajoPelota + this.espacioMovimiento;
-
+        List<Coordenada> coordenadasIzq= new ArrayList<Coordenada>();
+        List<Coordenada> coordenadasDer= new ArrayList<Coordenada>();
+        List<Coordenada> coordenadasArriba= new ArrayList<Coordenada>();
+        List<Coordenada> coordenadasAbajo= new ArrayList<Coordenada>();
+        coordenadasArribaAbajo(coordenadasArriba,coordenadasAbajo);
+        coordenadasIzqDer(coordenadasIzq,coordenadasDer);
 
         for (Obstaculo obs : lista
         ) {
             //ABAJO
-
+/*
             boolean hayObsIzq = obs.existeObstaculo(this.posX + (this.mWidth / 4), this.posY + (float) (this.mHeight * 0.75));
             boolean hayObsDer = obs.existeObstaculo(this.posX + (float) (this.mWidth * 0.75), this.posY + (float) (this.mHeight * 0.75));
             boolean hayObsMedio = obs.existeObstaculo(this.posX + (this.mWidth / 2), this.posY + this.mHeight);
@@ -129,8 +140,38 @@ public class Pelota extends View {
             hayObsAbajo = obs.existeObstaculo(this.posX + (float) (this.mWidth * 0.75), this.posY + (this.mHeight * (float) 0.75));
             if (derecha && (hayObsAbajo || hayObsArriba || hayObsMedio)) {
                 derecha = false;
+            }*/
+
+            for (Coordenada coor: coordenadasAbajo
+                 ) {
+                if(abajo && obs.existeObstaculo(coor.getX(),coor.getY())){
+                    abajo=false;
+                }
+
+            }
+            for (Coordenada coor: coordenadasArriba
+            ) {
+                if(arriba && obs.existeObstaculo(coor.getX(),coor.getY())){
+                    arriba=false;
+                }
+
+            }
+            for (Coordenada coor: coordenadasIzq
+            ) {
+                if(izquierda && obs.existeObstaculo(coor.getX(),coor.getY())){
+                    izquierda=false;
+                }
+
+            }
+            for (Coordenada coor: coordenadasDer
+            ) {
+                if(derecha && obs.existeObstaculo(coor.getX(),coor.getY())){
+                    derecha=false;
+                }
+
             }
         }
+
         listaPuede.add(abajo);
         listaPuede.add(arriba);
         listaPuede.add(izquierda);
@@ -138,6 +179,33 @@ public class Pelota extends View {
         Log.i("puedeAbajo", String.valueOf(listaPuede.get(0)));
         return listaPuede;
     }
+    public void coordenadasArribaAbajo(List<Coordenada> coordenadasArriba, List<Coordenada> coordenadasAbajo){
+        float x;
+        for( x= centroX-radio+1;x<centroX+radio;x+=1){
+            Coordenada coordenada=new Coordenada();
+            coordenada.setX(x);
+            coordenada.establecerY(radio,centroX,centroY,true);
+            coordenadasAbajo.add(coordenada);
+            Coordenada coordenada2=new Coordenada();
+            coordenada2.setX(x);
+            coordenada2.establecerY(radio,centroX,centroY,false);
+            coordenadasArriba.add(coordenada2);
+        }
+    }
+    public void coordenadasIzqDer(List<Coordenada> coordenadasIzq, List<Coordenada> coordenadasDer){
+        float y;
+        for( y= centroY-radio+1;y<centroY+radio;y+=1){
+            Coordenada coordenada=new Coordenada();
+            coordenada.setY(y);
+            coordenada.establecerX(radio,centroX,centroY,true);
+            coordenadasDer.add(coordenada);
+            Coordenada coordenada2=new Coordenada();
+            coordenada2.setY(y);
+            coordenada2.establecerX(radio,centroX,centroY,false);
+            coordenadasIzq.add(coordenada2);
+        }
+    }
+
 
 }
 
