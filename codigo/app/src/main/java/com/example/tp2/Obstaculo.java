@@ -17,13 +17,13 @@ public class Obstaculo extends View {
     private float posX;
     private float posY;
 
-    public Obstaculo(Context context, float posX, float posY, int divAlto,int divAncho,boolean horizontal) {
+    public Obstaculo(Context context, float posX, float posY, int divAlto, int divAncho, boolean horizontal) {
         super(context);
         this.posX = posX;
         this.posY = posY;
         this.horizontal = horizontal;
-        this.divAlto=divAlto;
-        this.divAncho=divAncho;
+        this.divAlto = divAlto;
+        this.divAncho = divAncho;
 
         if (horizontal)
             //PONER OBSTACULO HORIZONTAL
@@ -39,16 +39,20 @@ public class Obstaculo extends View {
         obstaculo = Bitmap.createScaledBitmap(bitmap, mWidth, mHeigth, true);
 
     }
-    public float getPosY(){
+
+    public float getPosY() {
         return this.posY;
     }
-    public  float getPosX(){
-        return  this.posX;
+
+    public float getPosX() {
+        return this.posX;
     }
-    public int getmHeigth(){
+
+    public int getmHeigth() {
         return this.mHeigth;
     }
-    public int getmWidth(){
+
+    public int getmWidth() {
         return this.mWidth;
     }
 
@@ -56,8 +60,9 @@ public class Obstaculo extends View {
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(obstaculo, posX, posY, null);
     }
-    public boolean existeObstaculo(float posX,float posY){
-        if(posY>=this.posY && posY<=this.posY+this.mHeigth && posX>=this.posX && posX<=this.posX+mWidth)
+
+    public boolean existeObstaculo(float posX, float posY) {
+        if (posY >= this.posY && posY <= this.posY + this.mHeigth && posX >= this.posX && posX <= this.posX + mWidth)
             return true;
         return false;
 
