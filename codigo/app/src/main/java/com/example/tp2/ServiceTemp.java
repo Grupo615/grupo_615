@@ -17,37 +17,32 @@ public class ServiceTemp extends IntentService {
     private boolean noTermino = true;
     private int milisegundos;
     private int tiempoInicial;
-    protected boolean play = true;
-    private BroadCastTemp broadCastTemp;
+    private static  boolean play = true;
+
 
     public ServiceTemp() {
         super("ServiceTemp");
-       /* broadCastTemp= new BroadCastTemp();
-        IntentFilter filter=new IntentFilter();
-        filter.addAction("com.example.tp2.SETEAR_PLAY");
-        registerReceiver(broadCastTemp,filter);
-
-        */
-
     }
-    public  void onDestroy(){
-        super.onDestroy();
-        unregisterReceiver(broadCastTemp);
+    protected static void setearPlay(boolean nPlay) {
+        play=nPlay;
     }
 
-    @Override
+
+        @Override
     protected void onHandleIntent(Intent intent) {
         tiempoInicial = (int) System.currentTimeMillis();
         while (noTermino) {
             Intent i = new Intent();
 
             Log.i("estado", String.valueOf(play));
+            int tiempoPausaActual = 0;
             if (!play)
                 inicioPausa = (int) System.currentTimeMillis();
             while (!play) {
                 int actual = (int) System.currentTimeMillis();
-                tiempoEnPausa += actual - inicioPausa;
+                tiempoPausaActual = actual - inicioPausa;
             }
+            tiempoEnPausa += tiempoPausaActual;
             calcularTiempo();
             i.putExtra("cambioTiempo", tiempo);
             i.setAction("com.example.tp2.TIEMPO");
@@ -67,14 +62,7 @@ public class ServiceTemp extends IntentService {
         this.tiempo = (milisegundos - tiempoInicial - tiempoEnPausa) / 1000;
 
     }
-
-    class BroadCastTemp extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle= intent.getExtras();
-            play= bundle.getBoolean("setearPlay");
-        }
     }
 
-}
+
+

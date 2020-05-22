@@ -125,6 +125,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                 sendBroadcast(i);
 
                  */
+                ServiceTemp.setearPlay(play);
 
             }
 
