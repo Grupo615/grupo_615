@@ -12,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <activity android:name=".Resultado"
+            android:screenOrientation="portrait"></activity>
+
         <service
             android:name=".ServiceTemp"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
             android:name=".LoginUsuario"
@@ -34,6 +37,8 @@
         <activity
             android:name=".RegistroUsuario"
             android:screenOrientation="portrait" />
+
+
 
         <receiver android:name=".ConexionInternet">
             <intent-filter>

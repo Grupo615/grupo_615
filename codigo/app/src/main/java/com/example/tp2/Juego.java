@@ -48,20 +48,19 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         pelota = new Pelota(this);
         tablero = new Tablero(this);
         temp = new Temporizador(this);
-        receiverTemp=new BroadcastReceiverTemp(temp);
-        agujero=new Agujero(this);
+        receiverTemp = new BroadcastReceiverTemp(temp);
+        agujero = new Agujero(this);
         definirObstaculos();
         layout1.addView(tablero);
         layout1.addView(agujero);
         layout1.addView(pelota); // agrega la pelota al layout
         agregarObstaculos(layout1);
         layout1.addView(temp);
-        iService= new Intent(this,ServiceTemp.class);
+        iService = new Intent(this, ServiceTemp.class);
         startService(iService);
 
 
     }
-
 
 
     public void definirObstaculos() {
@@ -101,9 +100,10 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
 
                 float x = (Math.round(event.values[0] * 10f) / 10f);
                 float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
-                pelota.mover(x, y, listaObs);
+                boolean seMovio = pelota.mover(x, y, listaObs);
                 pelota.invalidate();
-
+                if (seMovio)
+                    verFinGame();
 
             }
         }
@@ -118,18 +118,29 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                     play = true;
                     tablero.setPlay(play);
                 }
-                /*
-                Intent i = new Intent();
-                i.putExtra("setearPlay",String.valueOf(play));
-                i.setAction("com.example.tp2.SETEAR_PLAY");
-                sendBroadcast(i);
 
-                 */
                 ServiceTemp.setearPlay(play);
 
             }
 
         }
+    }
+
+    private void verFinGame() {
+        boolean termina = agujero.isCovered(pelota.getCentroX(),pelota.getCentroY());
+        Log.i("termin", String.valueOf(termina));
+        if (termina) {
+            mostrarResultado();
+            ServiceTemp.terminar();
+        }
+
+    }
+
+    public void mostrarResultado() {
+        Intent intent = new Intent(this, Resultado.class);
+        intent.putExtra("resultado", String.valueOf(this.temp.getTiempo()));
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -139,9 +150,9 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
 
     protected void onResume() {
         super.onResume();
-        IntentFilter filter =new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.tp2.TIEMPO");
-        registerReceiver(receiverTemp,filter);
+        registerReceiver(receiverTemp, filter);
         // registrarse a los eventos del sensor
         sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, proximidad, SensorManager.SENSOR_DELAY_GAME);
@@ -154,15 +165,17 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         unregisterReceiver(receiverTemp);
     }
 
-    class BroadcastReceiverTemp  extends BroadcastReceiver {
+    class BroadcastReceiverTemp extends BroadcastReceiver {
         Temporizador temporizador;
-        public BroadcastReceiverTemp(Temporizador temporizador){
-            this.temporizador=temporizador;
+
+        public BroadcastReceiverTemp(Temporizador temporizador) {
+            this.temporizador = temporizador;
         }
+
         @Override
         public void onReceive(Context context, Intent intent) {
-            Bundle bundle=intent.getExtras();
-            int tiempo=bundle.getInt("cambioTiempo");
+            Bundle bundle = intent.getExtras();
+            int tiempo = bundle.getInt("cambioTiempo");
             temporizador.setTiempo(tiempo);
         }
     }

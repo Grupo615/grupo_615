@@ -14,7 +14,7 @@ public class ServiceTemp extends IntentService {
     private int tiempo = 0;
     private int tiempoEnPausa = 0;
     private int inicioPausa;
-    private boolean noTermino = true;
+    private  static  boolean termino = false;
     private int milisegundos;
     private int tiempoInicial;
     private static  boolean play = true;
@@ -31,10 +31,9 @@ public class ServiceTemp extends IntentService {
         @Override
     protected void onHandleIntent(Intent intent) {
         tiempoInicial = (int) System.currentTimeMillis();
-        while (noTermino) {
+        while (!termino) {
             Intent i = new Intent();
 
-            Log.i("estado", String.valueOf(play));
             int tiempoPausaActual = 0;
             if (!play)
                 inicioPausa = (int) System.currentTimeMillis();
@@ -61,6 +60,10 @@ public class ServiceTemp extends IntentService {
         milisegundos = (int) System.currentTimeMillis();
         this.tiempo = (milisegundos - tiempoInicial - tiempoEnPausa) / 1000;
 
+    }
+    public static void terminar(){
+        Log.i("verTermina",String.valueOf(termino));
+        termino=true;
     }
     }
 

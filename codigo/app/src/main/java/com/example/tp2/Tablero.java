@@ -41,7 +41,6 @@ public class Tablero extends View {
         canvas.drawBitmap(tablero, 0, 0, null);
         if (!this.play)
             canvas.drawBitmap(pausa, getWidth() / 3, getHeight() / 3, paint);
-        //canvas.drawText("PAUSA",getWidth()/2,getHeight()/2,paint);
 
     }
 }

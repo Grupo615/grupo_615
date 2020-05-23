@@ -18,7 +18,7 @@ public class Pelota extends View {
     Paint paint;
     float ancho; // de canvas
     float largo;// de canvas
-    float posX = 0, posY = 0; // posiciones iniciales
+    float posX =0,posY =0;  // posiciones iniciales
     float anteriorX = 0, anteriorY = 0;
     boolean primera = true;
     Bitmap bitmap;
@@ -26,9 +26,9 @@ public class Pelota extends View {
     private int mHeight;
     private Bitmap pelota;
     float espacioMovimiento = this.ancho / 135;
-    float centroX;
-    float centroY;
-    float radio;
+    private float centroX;
+    private float centroY;
+    private float radio;
 
     public Pelota(Context context) {
         super(context);
@@ -39,134 +39,113 @@ public class Pelota extends View {
 
     public void onSizeChanged(int a, int b, int c, int d) {
         mWidth = getWidth() / 7;
-        mHeight = getWidth()/7;
-        radio=mWidth/2;
+        mHeight = getWidth() / 7;
+        radio = mWidth / 2;
+        centroY=posY+radio;
+        centroX=posX+radio;
         pelota = Bitmap.createScaledBitmap(bitmap, mWidth, mHeight, true); // redimensiona el bitmap
     }
 
     protected void onDraw(Canvas canvas) {
-        //canvas.drawColor(Color.BLUE);
+
         this.ancho = canvas.getWidth();
         espacioMovimiento = this.ancho / 135;
         this.largo = canvas.getHeight();
-        //  canvas.drawCircle(posX,posY,radio,paint); //dibuja el circulo
+        this.centroX = posX + radio;
+       this.centroY = posY + radio;
         canvas.drawBitmap(pelota, posX, posY, null);
     }
 
 
-    public void mover(float x, float y, List<Obstaculo> listaObs) {
+    public boolean mover(float x, float y, List<Obstaculo> listaObs) {
 
         double margenSuperior = 1.5; // para ignorar los movimientos minimos
         double margenInferior = -1.5;
-        centroX=posX+radio;
-        centroY=posY+radio;
+        boolean seMovio = false;
+        this.centroX = posX + radio;
+        this.centroY = posY + radio;
+        Log.i("centroX", String.valueOf(centroX));
+        Log.i("centroY", String.valueOf(centroY));
         // desplazamiento de pelota
         // para iniciarlizar las variables anteriorX y anteriorY
         if (primera == true) {
             primera = false;
             anteriorX = x;
             anteriorY = y;
-            return;
+            return seMovio;
         }
         List<Boolean> puede = sinObstaculo(listaObs); // le paso la lista de obstaculos y me dice para donde se puede mover
         //abajo,arriba,izquierda,derecha
 // se mueve si cambio el x
         if (anteriorX != x) {
-            if (puede.get(3) && x < margenInferior && posX + this.mWidth < this.ancho) //mueve hacia la derecha
+            if (puede.get(3) && x < margenInferior && posX + this.mWidth < this.ancho) { //mueve hacia la derecha
                 posX += espacioMovimiento;
-            else if (puede.get(2) && x > margenSuperior && posX > 0) //mueve hacia la izquierda
+                seMovio = true;
+            } else if (puede.get(2) && x > margenSuperior && posX > 0) { //mueve hacia la izquierda
                 posX -= espacioMovimiento;
+                seMovio = true;
+            }
             anteriorX = x;
         }
         // se mueve si cambio Y
-        Log.d("posX", String.valueOf(this.posX));
-        Log.d("posY", String.valueOf(this.posY));
-        Log.d("posX+mWidth", String.valueOf(posX + mWidth));
-        Log.d("posY+mHeight", String.valueOf(posY + mHeight));
-        Log.d("mHeigth", String.valueOf(this.mHeight));
-        Log.d("mWidth", String.valueOf(this.mWidth));
-        Log.d("largo", String.valueOf(this.largo));
-        Log.d("ancho", String.valueOf(this.ancho));
-
 
         if (anteriorY != y) {
-            if (puede.get(1) && y < margenInferior && posY > 0) //muevo hacia arriba
+            if (puede.get(1) && y < margenInferior && posY > 0) { //muevo hacia arriba
                 posY -= espacioMovimiento;
-            else if (puede.get(0) && y > margenSuperior && posY + this.mHeight < this.largo)// muevo hacia abajo
+                seMovio = true;
+            } else if (puede.get(0) && y > margenSuperior && posY + this.mHeight < this.largo) {// muevo hacia abajo
                 posY += espacioMovimiento;
+                seMovio = true;
+            }
             anteriorY = y;
         }
+        return seMovio;
 
+    }
+    public float getRadio(){
+       return this.radio;
     }
 
     public List<Boolean> sinObstaculo(List<Obstaculo> lista) {
         List<Boolean> listaPuede = new ArrayList<Boolean>();
         boolean abajo = true, arriba = true, izquierda = true, derecha = true;
-        float posYAbajoPelota = this.posY + this.mHeight;
-        float posYAbajoPelotaFinal = posYAbajoPelota + this.espacioMovimiento;
-        List<Coordenada> coordenadasIzq= new ArrayList<Coordenada>();
-        List<Coordenada> coordenadasDer= new ArrayList<Coordenada>();
-        List<Coordenada> coordenadasArriba= new ArrayList<Coordenada>();
-        List<Coordenada> coordenadasAbajo= new ArrayList<Coordenada>();
-        coordenadasArribaAbajo(coordenadasArriba,coordenadasAbajo);
-        coordenadasIzqDer(coordenadasIzq,coordenadasDer);
+
+        List<Coordenada> coordenadasIzq = new ArrayList<Coordenada>();
+        List<Coordenada> coordenadasDer = new ArrayList<Coordenada>();
+        List<Coordenada> coordenadasArriba = new ArrayList<Coordenada>();
+        List<Coordenada> coordenadasAbajo = new ArrayList<Coordenada>();
+        coordenadasArribaAbajo(coordenadasArriba, coordenadasAbajo);
+        coordenadasIzqDer(coordenadasIzq, coordenadasDer);
 
         for (Obstaculo obs : lista
         ) {
-            //ABAJO
-/*
-            boolean hayObsIzq = obs.existeObstaculo(this.posX + (this.mWidth / 4), this.posY + (float) (this.mHeight * 0.75));
-            boolean hayObsDer = obs.existeObstaculo(this.posX + (float) (this.mWidth * 0.75), this.posY + (float) (this.mHeight * 0.75));
-            boolean hayObsMedio = obs.existeObstaculo(this.posX + (this.mWidth / 2), this.posY + this.mHeight);
 
-            if (abajo && (hayObsIzq || hayObsDer || hayObsMedio)) {
-                abajo = false;
-            }
 
-            hayObsMedio = obs.existeObstaculo(this.posX + (this.mWidth / 2), this.posY);
-            hayObsIzq = obs.existeObstaculo(this.posX + (this.mWidth / 4), this.posY+(this.mHeight/8));
-            hayObsDer = obs.existeObstaculo(this.posX + (float)(this.mWidth*0.75), this.posY+(this.mHeight/8));
-            if (arriba && (hayObsIzq || hayObsDer || hayObsMedio)) {
-                arriba = false;
-            }
-            boolean hayObsArriba = obs.existeObstaculo(this.posX + (this.mWidth / 4), this.posY + (this.mHeight / 4));
-            hayObsMedio = obs.existeObstaculo(this.posX, this.posY + (this.mHeight / 2));
-            boolean hayObsAbajo = obs.existeObstaculo(this.posX + (this.mWidth / 4), this.posY + (this.mHeight * (float) 0.75));
-            if (izquierda && (hayObsAbajo || hayObsArriba || hayObsMedio)) {
-                izquierda = false;
-            }
-            hayObsMedio = obs.existeObstaculo(this.posX + this.mWidth, this.posY + (this.mHeight / 2));
-            hayObsArriba = obs.existeObstaculo(this.posX + (float) (this.mWidth * 0.75), this.posY + (this.mHeight / 4));
-            hayObsAbajo = obs.existeObstaculo(this.posX + (float) (this.mWidth * 0.75), this.posY + (this.mHeight * (float) 0.75));
-            if (derecha && (hayObsAbajo || hayObsArriba || hayObsMedio)) {
-                derecha = false;
-            }*/
-
-            for (Coordenada coor: coordenadasAbajo
-                 ) {
-                if(abajo && obs.existeObstaculo(coor.getX(),coor.getY())){
-                    abajo=false;
+            for (Coordenada coor : coordenadasAbajo
+            ) {
+                if (abajo && obs.existeObstaculo(coor.getX(), coor.getY())) {
+                    abajo = false;
                 }
 
             }
-            for (Coordenada coor: coordenadasArriba
+            for (Coordenada coor : coordenadasArriba
             ) {
-                if(arriba && obs.existeObstaculo(coor.getX(),coor.getY())){
-                    arriba=false;
+                if (arriba && obs.existeObstaculo(coor.getX(), coor.getY())) {
+                    arriba = false;
                 }
 
             }
-            for (Coordenada coor: coordenadasIzq
+            for (Coordenada coor : coordenadasIzq
             ) {
-                if(izquierda && obs.existeObstaculo(coor.getX(),coor.getY())){
-                    izquierda=false;
+                if (izquierda && obs.existeObstaculo(coor.getX(), coor.getY())) {
+                    izquierda = false;
                 }
 
             }
-            for (Coordenada coor: coordenadasDer
+            for (Coordenada coor : coordenadasDer
             ) {
-                if(derecha && obs.existeObstaculo(coor.getX(),coor.getY())){
-                    derecha=false;
+                if (derecha && obs.existeObstaculo(coor.getX(), coor.getY())) {
+                    derecha = false;
                 }
 
             }
@@ -176,34 +155,46 @@ public class Pelota extends View {
         listaPuede.add(arriba);
         listaPuede.add(izquierda);
         listaPuede.add(derecha);
-        Log.i("puedeAbajo", String.valueOf(listaPuede.get(0)));
+
         return listaPuede;
     }
-    public void coordenadasArribaAbajo(List<Coordenada> coordenadasArriba, List<Coordenada> coordenadasAbajo){
+
+    public void coordenadasArribaAbajo(List<Coordenada> coordenadasArriba, List<Coordenada> coordenadasAbajo) {
         float x;
-        for( x= centroX-radio+1;x<centroX+radio;x+=1){
-            Coordenada coordenada=new Coordenada();
+        for (x = centroX - radio + 1; x < centroX + radio; x += 1) {
+            Coordenada coordenada = new Coordenada();
             coordenada.setX(x);
-            coordenada.establecerY(radio,centroX,centroY,true);
+            coordenada.establecerY(radio, centroX, centroY, true);
             coordenadasAbajo.add(coordenada);
-            Coordenada coordenada2=new Coordenada();
+            Coordenada coordenada2 = new Coordenada();
             coordenada2.setX(x);
-            coordenada2.establecerY(radio,centroX,centroY,false);
+            coordenada2.establecerY(radio, centroX, centroY, false);
             coordenadasArriba.add(coordenada2);
         }
     }
-    public void coordenadasIzqDer(List<Coordenada> coordenadasIzq, List<Coordenada> coordenadasDer){
+
+    public void coordenadasIzqDer(List<Coordenada> coordenadasIzq, List<Coordenada> coordenadasDer) {
         float y;
-        for( y= centroY-radio+1;y<centroY+radio;y+=1){
-            Coordenada coordenada=new Coordenada();
+        for (y = centroY - radio + 1; y < centroY + radio; y += 1) {
+            Coordenada coordenada = new Coordenada();
             coordenada.setY(y);
-            coordenada.establecerX(radio,centroX,centroY,true);
+            coordenada.establecerX(radio, centroX, centroY, true);
             coordenadasDer.add(coordenada);
-            Coordenada coordenada2=new Coordenada();
+            Coordenada coordenada2 = new Coordenada();
             coordenada2.setY(y);
-            coordenada2.establecerX(radio,centroX,centroY,false);
+            coordenada2.establecerX(radio, centroX, centroY, false);
             coordenadasIzq.add(coordenada2);
         }
+    }
+
+    public float getCentroX() {
+        Log.i("getCentroX",String.valueOf(this.centroX));
+        return this.centroX;
+    }
+
+    public float getCentroY() {
+        Log.i("getCentroY",String.valueOf(this.centroY));
+        return this.centroY;
     }
 
 
