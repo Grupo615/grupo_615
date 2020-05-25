@@ -30,4 +30,5 @@ public class Temporizador extends View {
     public String getTiempo(){
         return  minutos+":"+segundos;
     }
+    
 }
