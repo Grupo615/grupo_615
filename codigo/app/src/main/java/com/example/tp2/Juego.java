@@ -5,6 +5,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,23 +17,26 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Juego extends AppCompatActivity implements SensorEventListener {
-    Pelota pelota;
-    SensorManager sensorManager;
-    Sensor acelerometro;
-    Sensor proximidad;
-    Tablero tablero;
-    Temporizador temp;
-    Intent iService;
-    private Agujero agujero;
-    boolean play = true;
-    private BroadcastReceiverTemp receiverTemp;
-    Obstaculo obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8;
-    List<Obstaculo> listaObs;
+    Pelota                          pelota;
+    SensorManager                   sensorManager;
+    Sensor                          acelerometro;
+    Sensor                          proximidad;
+    Tablero                         tablero;
+    Temporizador                    temp;
+    Intent                          iService;
+    private Agujero                 agujero;
+    boolean                         play = true;
+    private BroadcastReceiverTemp   receiverTemp;
+    Obstaculo                       obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8;
+    List<Obstaculo>                 listaObs;
+    SharedPreferences               Sacelerometro,Sproximidad;
+    DecimalFormat                   dosdecimales = new DecimalFormat("###.###");
 
 
     @Override
@@ -58,7 +62,6 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         layout1.addView(temp);
         iService = new Intent(this, ServiceTemp.class);
         startService(iService);
-
 
     }
 
@@ -97,7 +100,6 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         synchronized (this) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && play == true) {
 
-
                 float x = (Math.round(event.values[0] * 10f) / 10f);
                 float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
                 boolean seMovio = pelota.mover(x, y, listaObs);
@@ -106,25 +108,28 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                     verFinGame();
 
             }
-        }
-        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
 
-            if (event.values[0] == 0) {
-                if (play) {
-                    play = false;
+            if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
 
-                    tablero.setPlay(play);
-                } else {
-                    play = true;
-                    tablero.setPlay(play);
+                if (event.values[0] == 0) {
+                    if (play) {
+                        play = false;
+                        tablero.setPlay(play);
+                    } else {
+                        play = true;
+                        tablero.setPlay(play);
+                    }
+
+                    ServiceTemp.setearPlay(play);
                 }
 
-                ServiceTemp.setearPlay(play);
-
             }
-
         }
     }
+
+
+
+
 
     private void verFinGame() {
         boolean termina = agujero.isCovered(pelota.getCentroX(),pelota.getCentroY());
