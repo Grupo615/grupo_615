@@ -38,6 +38,9 @@
             android:name=".RegistroUsuario"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".Sensores"
+            android:screenOrientation="portrait"></activity>
+
 
 
         <receiver android:name=".ConexionInternet">
