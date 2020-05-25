@@ -1,11 +1,7 @@
 package com.example.tp2;
 
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.Context;
-import android.content.IntentFilter;
-import android.os.Bundle;
 import android.util.Log;
 
 import static java.lang.Thread.sleep;
@@ -23,7 +19,8 @@ public class ServiceTemp extends IntentService {
     public ServiceTemp() {
         super("ServiceTemp");
     }
-    protected static void setearPlay(boolean nPlay) {
+
+    public static void setearPlay(boolean nPlay) {
         play=nPlay;
     }
 
@@ -53,7 +50,8 @@ public class ServiceTemp extends IntentService {
             }
 
         }
-
+        termino=false;
+        play=true;
     }
 
     private void calcularTiempo() {
@@ -65,6 +63,8 @@ public class ServiceTemp extends IntentService {
         Log.i("verTermina",String.valueOf(termino));
         termino=true;
     }
+
+
     }
 
 
