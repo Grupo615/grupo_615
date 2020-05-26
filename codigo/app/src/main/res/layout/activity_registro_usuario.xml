@@ -8,6 +8,19 @@
     tools:context=".RegistroUsuario">
 
     <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="336dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/boton_rounded"
+        android:onClick="irLogin"
+        android:text="volver a login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bttnRegistro" />
+
+    <Button
         android:id="@+id/bttnRegistro"
         android:layout_width="336dp"
         android:layout_height="45dp"
@@ -17,10 +30,10 @@
         android:text="Registrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eTGrup"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.211" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -80,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@+id/eTApe" />
 
     <EditText
-        android:id="@+id/eTEmail"
+        android:id="@+id/idEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -101,7 +114,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eTEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/idEmail" />
 
     <EditText
         android:id="@+id/eTcomision"
