@@ -8,11 +8,21 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+
 import RetrofitPackage.ComunicacionApiRest;
+import RetrofitPackage.ContantesRest;
+import RetrofitPackage.ErrorResponse;
 import RetrofitPackage.InterfazRestApi;
 import RetrofitPackage.PostRegistroLogin;
 import RetrofitPackage.ResponseLogin;
@@ -60,10 +70,25 @@ Context context;
         responseLoginCall.enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                if(response.body().getState().equals("success"))
-                    Toast.makeText(context,"ok",Toast.LENGTH_LONG).show();
+
+                if(response.body()==null){
+                    Toast.makeText(context, "body null", Toast.LENGTH_LONG).show();
+
+                    Gson gson = new Gson(); Type type = new TypeToken<ErrorResponse>() {}.getType();
+                    ErrorResponse errorResponse = gson.fromJson(response.errorBody().charStream(),type);
+                    Log.i("errorResponseMsg", errorResponse.getMsg());
+                    Log.i("errorResponseState", errorResponse.getState());
+
+                }
+                else if(response.body().getState().equals("success")) {
+                    Toast.makeText(context, "ok", Toast.LENGTH_LONG).show();
+                    ContantesRest.setToken(response.body().getToken());
+                    irMenu();
+                }
                 else if( response.body().getState().equals("error"))
                     Toast.makeText(context,"error en login", Toast.LENGTH_LONG).show();
+
+
             }
 
             @Override
@@ -87,7 +112,7 @@ Context context;
 
 
 
-    public void irMenu(View v){
+    public void irMenu(){
         Intent intent= new Intent(LoginUsuario.this,MenuPrincipal.class);
         startActivity(intent);
     }
