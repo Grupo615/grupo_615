@@ -7,11 +7,18 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+import RetrofitPackage.ErrorResponse;
 import RetrofitPackage.InterfazRestApi;
 import RetrofitPackage.PostRegistroLogin;
 import RetrofitPackage.ResponseRegistro;
@@ -38,17 +45,18 @@ public class RegistroUsuario extends AppCompatActivity {
         comision = (EditText) findViewById(R.id.eTcomision);
         grupo = (EditText) findViewById(R.id.eTGrup);
         Intent intent = getIntent();
-        context=this;
+        context = this;
 
     }
 
     public void ComprobarConexionRegistro(View v) {
         ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+
         NetworkInfo ni = manager.getActiveNetworkInfo();
+
         if (ni != null && ni.isConnected()) {
-            // Toast.makeText(getApplicationContext(),"Se pudo realizar el registro, "+
-            //          "pero se perdieron los datos jjajajaja",Toast.LENGTH_SHORT).show();
-            registrar(v);
+            registrar();
         } else
             Toast.makeText(getApplicationContext(), "No se pudo realizar el registro, " +
                     "su internet esta desconectada", Toast.LENGTH_SHORT).show();
@@ -56,16 +64,28 @@ public class RegistroUsuario extends AppCompatActivity {
 
     }
 
-    public void registrar(View v) {
+    public void registrar() {
         PostRegistroLogin postRegistroLogin = new PostRegistroLogin();
-        int comisionInt=Integer.parseInt(comision.getText().toString());
-        int dniInt=Integer.parseInt(dni.getText().toString());
-        int grupoInt=Integer.parseInt(grupo.getText().toString());
-        String emailString,passwordString,lastnameString,nameString;
-        emailString=email.getText().toString();
-        passwordString=contraseña.getText().toString();
-        lastnameString=apellido.getText().toString();
-        nameString=nombre.getText().toString();
+        if (comision.getText().toString().isEmpty()) {
+            Toast.makeText(context, "debe ingresar el numero de comision", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (dni.getText().toString().isEmpty()) {
+            Toast.makeText(context, "debe ingresar el numero de dni", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (grupo.getText().toString().isEmpty()) {
+            Toast.makeText(context, "debe ingresar el numero de grupo", Toast.LENGTH_LONG).show();
+            return;
+        }
+        int comisionInt = Integer.parseInt(comision.getText().toString());
+        int dniInt = Integer.parseInt(dni.getText().toString());
+        int grupoInt = Integer.parseInt(grupo.getText().toString());
+        String emailString, passwordString, lastnameString, nameString;
+        emailString = email.getText().toString();
+        passwordString = contraseña.getText().toString();
+        lastnameString = apellido.getText().toString();
+        nameString = nombre.getText().toString();
 
         postRegistroLogin.setCommission(comisionInt);
         postRegistroLogin.setDni(dniInt);
@@ -74,14 +94,7 @@ public class RegistroUsuario extends AppCompatActivity {
         postRegistroLogin.setLastname(lastnameString);
         postRegistroLogin.setName(nameString);
         postRegistroLogin.setPassword(passwordString);
-       // ComunicacionApiRest comunicacionApiRest = new ComunicacionApiRest();
-       /* postRegistroLogin.setCommission(2900);
-        postRegistroLogin.setDni(2323);
-        postRegistroLogin.setEmail("diads@gmail.ccom");
-        postRegistroLogin.setGroup(615);
-        postRegistroLogin.setLastname("adasd");
-        postRegistroLogin.setName("asdasd");
-        postRegistroLogin.setPassword("123456789");*/
+
         RestAdapter restAdapter = new RestAdapter();
 
 
@@ -91,29 +104,32 @@ public class RegistroUsuario extends AppCompatActivity {
         responseRegistroCall.enqueue(new Callback<ResponseRegistro>() {
             @Override
             public void onResponse(Call<ResponseRegistro> call, Response<ResponseRegistro> response) {
-                if(response!=null && response.body().getState().equals("success")){
+
+                if (response.body() == null) {
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<ErrorResponse>() {
+                    }.getType();
+                    ErrorResponse errorResponse = gson.fromJson(response.errorBody().charStream(), type);
+                    Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (response.body().getState().equals("success")) {
                     Toast.makeText(context, "Registrado correctamente", Toast.LENGTH_SHORT).show();
                 }
-               else  if(response!=null && response.body().getState().equals("error")){
-                    Toast.makeText(context, "No se registro", Toast.LENGTH_SHORT).show();
-                }
-               else{
-                   Toast.makeText(context,"errror",Toast.LENGTH_LONG).show();
-                }
+
 
             }
 
             @Override
             public void onFailure(Call<ResponseRegistro> call, Throwable t) {
-                Toast.makeText(context,"fallo la conexion",Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "fallo la conexion", Toast.LENGTH_LONG).show();
             }
         });
 
 
     }
-    public void irLogin(View v ){
 
-        Intent intent=  new Intent(RegistroUsuario.this,LoginUsuario.class);
+    public void irLogin(View v) {
+
+        Intent intent = new Intent(RegistroUsuario.this, LoginUsuario.class);
         startActivity(intent);
     }
 }
