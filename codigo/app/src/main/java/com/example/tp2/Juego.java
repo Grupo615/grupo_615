@@ -21,6 +21,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import RetrofitPackage.ComunicacionApiRest;
+
 
 public class Juego extends AppCompatActivity implements SensorEventListener {
     Pelota                          pelota;
@@ -97,15 +99,24 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+
+
         synchronized (this) {
-            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && play == true) {
+             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && play == true) {
 
                 float x = (Math.round(event.values[0] * 10f) / 10f);
                 float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
                 boolean seMovio = pelota.mover(x, y, listaObs);
                 pelota.invalidate();
-                if (seMovio)
+                if (seMovio) {
+
                     verFinGame();
+                   // comunicacionApiRest.registrarEvento(descripcion,type_events);
+                    Intent iServiceEvento = new Intent(this, ServiceRegistroEvento.class);
+                    iServiceEvento.putExtra("descripcion","se movio la pelota");
+                    iServiceEvento.putExtra("type_events","sensor");
+                    startService(iServiceEvento);
+                }
 
             }
 
@@ -114,16 +125,19 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                 if (event.values[0] == 0) {
                     if (play) {
                         play = false;
+                      //  descripcion="el juego se puso en pausa";
                         tablero.setPlay(play);
                     } else {
                         play = true;
+                    //    descripcion = "el juego se reanuda";
                         tablero.setPlay(play);
                     }
-
+                  //  comunicacionApiRest.registrarEvento(descripcion,type_events);
                     ServiceTemp.setearPlay(play);
                 }
 
             }
+
         }
     }
 

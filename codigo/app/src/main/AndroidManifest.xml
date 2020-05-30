@@ -12,8 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".Resultado"
-            android:screenOrientation="portrait"></activity>
+        <service
+            android:name=".ServiceRegistroEvento"
+            android:exported="false"></service>
+
+        <activity
+            android:name=".Resultado"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".ServiceTemp"
@@ -37,11 +42,9 @@
         <activity
             android:name=".RegistroUsuario"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".Sensores"
-            android:screenOrientation="portrait"></activity>
-
-
+        <activity
+            android:name=".Sensores"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".ConexionInternet">
             <intent-filter>

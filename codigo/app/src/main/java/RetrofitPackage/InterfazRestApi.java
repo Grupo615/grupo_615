@@ -13,4 +13,9 @@ public interface InterfazRestApi {
     @POST("login")
     Call<ResponseLogin> logearse(@Body PostRegistroLogin postRegistroLogin);
 
+
+    @POST("event")
+    Call<ResponseEvento> registrarEvento(@Header("token") String token,@Body PostEvento postEvento);
+
+
 }

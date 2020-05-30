@@ -18,9 +18,12 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
+import RetrofitPackage.ConstantesRest;
 import RetrofitPackage.ErrorResponse;
 import RetrofitPackage.InterfazRestApi;
+import RetrofitPackage.PostEvento;
 import RetrofitPackage.PostRegistroLogin;
+import RetrofitPackage.ResponseEvento;
 import RetrofitPackage.ResponseRegistro;
 import RetrofitPackage.RestAdapter;
 import retrofit2.Call;
@@ -113,6 +116,7 @@ public class RegistroUsuario extends AppCompatActivity {
                     Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
                 } else if (response.body().getState().equals("success")) {
                     Toast.makeText(context, "Registrado correctamente", Toast.LENGTH_SHORT).show();
+                    usuarioRegistrado();
                 }
 
 
@@ -121,6 +125,46 @@ public class RegistroUsuario extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseRegistro> call, Throwable t) {
                 Toast.makeText(context, "fallo la conexion", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+
+    private void usuarioRegistrado() {
+        PostEvento postEvento= new PostEvento();
+        postEvento.setEnv("TEST");
+        postEvento.setDescription("el usuario ha sido registrado correctamente");
+        postEvento.setState("ACTIVO");
+        postEvento.setType_events("registro");
+        RestAdapter restAdapter = new RestAdapter();
+
+
+        // responseRegistro=new ResponseRegistro();
+        InterfazRestApi interfazRestApi = restAdapter.conectar();
+        Call<ResponseEvento> responseEventoCall = interfazRestApi.registrarEvento(ConstantesRest.getToken(),postEvento);
+        responseEventoCall.enqueue(new Callback<ResponseEvento>() {
+            @Override
+            public void onResponse(Call<ResponseEvento> call, Response<ResponseEvento> response) {
+                if(response.body()==null){
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<ErrorResponse>() {
+                    }.getType();
+                    ErrorResponse errorResponse = gson.fromJson(response.errorBody().charStream(), type);
+                    Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
+                }
+                else  if( response.body().getState().equals("success"))
+                    Toast.makeText(context,"registro de evento exitoso",Toast.LENGTH_LONG).show();
+                else{
+                    Toast.makeText(context,"fallo el registro del evento",Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEvento> call, Throwable t) {
+
             }
         });
 

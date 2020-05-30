@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.Serializable;
+import java.lang.reflect.Type;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,4 +71,43 @@ public void enviarLogin(PostRegistroLogin postRegistroLogin) {
     });
 }
 */
+public void registrarEvento(String descripcion,String type_events){
+    PostEvento postEvento= new PostEvento();
+    postEvento.setEnv("TEST");
+    postEvento.setDescription(descripcion);
+    postEvento.setState("ACTIVO");
+    postEvento.setType_events(type_events);
+    RestAdapter restAdapter = new RestAdapter();
+
+
+    // responseRegistro=new ResponseRegistro();
+    InterfazRestApi interfazRestApi = restAdapter.conectar();
+    Call<ResponseEvento> responseEventoCall = interfazRestApi.registrarEvento(ConstantesRest.getToken(),postEvento);
+    responseEventoCall.enqueue(new Callback<ResponseEvento>() {
+        @Override
+        public void onResponse(Call<ResponseEvento> call, Response<ResponseEvento> response) {
+            if(response.body()==null){
+                Gson gson = new Gson();
+                Type type = new TypeToken<ErrorResponse>() {
+                }.getType();
+                ErrorResponse errorResponse = gson.fromJson(response.errorBody().charStream(), type);
+                Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
+            }
+            else  if( response.body().getState().equals("success"))
+                Toast.makeText(context,descripcion+ "exitoso",Toast.LENGTH_LONG).show();
+            else{
+                Toast.makeText(context,"fallo "+ descripcion ,Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+
+        @Override
+        public void onFailure(Call<ResponseEvento> call, Throwable t) {
+
+        }
+    });
+
+
+}
 }
