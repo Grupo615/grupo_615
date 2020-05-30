@@ -17,10 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ComunicacionApiRest {
-  Context context;
-    public ComunicacionApiRest(Context nContext){
-        context=nContext;
-    }
+
+    public ComunicacionApiRest(){}
 
 /*
     public void enviarPostRegitro(PostRegistroLogin postRegistroLogin,ResponseRegistro responseRegistro){
@@ -91,12 +89,15 @@ public void registrarEvento(String descripcion,String type_events){
                 Type type = new TypeToken<ErrorResponse>() {
                 }.getType();
                 ErrorResponse errorResponse = gson.fromJson(response.errorBody().charStream(), type);
-                Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
+                Log.i("mensajeError",errorResponse.getMsg());
+              //  Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
             }
             else  if( response.body().getState().equals("success"))
-                Toast.makeText(context,descripcion+ "exitoso",Toast.LENGTH_LONG).show();
+              //  Toast.makeText(context,descripcion+ "exitoso",Toast.LENGTH_LONG).show();
+                Log.i("mensajeSuccess",descripcion+ "exito");
             else{
-                Toast.makeText(context,"fallo "+ descripcion ,Toast.LENGTH_LONG).show();
+                Log.i("mensajeFallo","fallo "+descripcion);
+               // Toast.makeText(context,"fallo "+ descripcion ,Toast.LENGTH_LONG).show();
             }
 
 

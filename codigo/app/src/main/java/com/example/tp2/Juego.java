@@ -25,20 +25,22 @@ import RetrofitPackage.ComunicacionApiRest;
 
 
 public class Juego extends AppCompatActivity implements SensorEventListener {
-    Pelota                          pelota;
-    SensorManager                   sensorManager;
-    Sensor                          acelerometro;
-    Sensor                          proximidad;
-    Tablero                         tablero;
-    Temporizador                    temp;
-    Intent                          iService;
-    private Agujero                 agujero;
-    boolean                         play = true;
-    private BroadcastReceiverTemp   receiverTemp;
-    Obstaculo                       obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8;
-    List<Obstaculo>                 listaObs;
-    SharedPreferences               Sacelerometro,Sproximidad;
-    DecimalFormat                   dosdecimales = new DecimalFormat("###.###");
+    Pelota pelota;
+    SensorManager sensorManager;
+    Sensor acelerometro;
+    Sensor proximidad;
+    Tablero tablero;
+    Temporizador temp;
+    Intent iService;
+    private Agujero agujero;
+    boolean play = true;
+    private BroadcastReceiverTemp receiverTemp;
+    Obstaculo obstaculo1, obstaculo2, obstaculo3, obstaculo4, obstaculo5, obstaculo6, obstaculo7, obstaculo8;
+    List<Obstaculo> listaObs;
+    SharedPreferences Sacelerometro, Sproximidad;
+    DecimalFormat dosdecimales = new DecimalFormat("###.###");
+    Intent iServiceEvento;
+
 
 
     @Override
@@ -64,6 +66,8 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         layout1.addView(temp);
         iService = new Intent(this, ServiceTemp.class);
         startService(iService);
+        iServiceEvento = new Intent(this, ServiceRegistroEvento.class);
+        startService(iServiceEvento);
 
     }
 
@@ -100,9 +104,8 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
 
 
-
         synchronized (this) {
-             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && play == true) {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && play == true) {
 
                 float x = (Math.round(event.values[0] * 10f) / 10f);
                 float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
@@ -111,11 +114,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                 if (seMovio) {
 
                     verFinGame();
-                   // comunicacionApiRest.registrarEvento(descripcion,type_events);
-                    Intent iServiceEvento = new Intent(this, ServiceRegistroEvento.class);
-                    iServiceEvento.putExtra("descripcion","se movio la pelota");
-                    iServiceEvento.putExtra("type_events","sensor");
-                    startService(iServiceEvento);
+                    ServiceRegistroEvento.agregarEvento("la pelota se movio","sensor acelerometro");
                 }
 
             }
@@ -123,17 +122,19 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
 
                 if (event.values[0] == 0) {
+                    String descripcion = "";
                     if (play) {
                         play = false;
-                      //  descripcion="el juego se puso en pausa";
+                        descripcion = "el juego se puso en pausa";
                         tablero.setPlay(play);
                     } else {
                         play = true;
-                    //    descripcion = "el juego se reanuda";
+                        descripcion = "el juego se reanuda";
                         tablero.setPlay(play);
                     }
-                  //  comunicacionApiRest.registrarEvento(descripcion,type_events);
+                    //  comunicacionApiRest.registrarEvento(descripcion,type_events);
                     ServiceTemp.setearPlay(play);
+                    ServiceRegistroEvento.agregarEvento(descripcion,"sensor Proximidad");
                 }
 
             }
@@ -142,15 +143,13 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     }
 
 
-
-
-
     private void verFinGame() {
-        boolean termina = agujero.isCovered(pelota.getCentroX(),pelota.getCentroY());
+        boolean termina = agujero.isCovered(pelota.getCentroX(), pelota.getCentroY());
         Log.i("termin", String.valueOf(termina));
         if (termina) {
             mostrarResultado();
             ServiceTemp.terminar();
+            ServiceRegistroEvento.detener();
         }
 
     }
