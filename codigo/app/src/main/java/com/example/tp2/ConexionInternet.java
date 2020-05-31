@@ -8,6 +8,7 @@ import android.widget.Toast;
 public class ConexionInternet extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        //Hay internet o no
         if (!checkearInternet(context)) {
             Toast.makeText(context, "Internet desconectada", Toast.LENGTH_SHORT).show();
         }else{
