@@ -67,7 +67,7 @@
         android:layout_width="263dp"
         android:layout_height="68dp"
         android:layout_marginTop="104dp"
-        android:text="Tu mejor tiempo"
+        android:text="Mejor tiempo"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.351"
