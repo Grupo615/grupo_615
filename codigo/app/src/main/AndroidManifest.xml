@@ -12,9 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <activity android:name=".splash">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
         <service
             android:name=".ServiceRegistroEvento"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
             android:name=".Resultado"
@@ -26,19 +34,15 @@
 
         <activity
             android:name=".LoginUsuario"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".MenuPrincipal"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Juego"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".RegistroUsuario"
             android:screenOrientation="portrait" />
