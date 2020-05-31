@@ -25,6 +25,7 @@ public class Agujero extends View {
     }
 
     public boolean isCovered(float pelotaX,float pelotaY){
+        //Valores para saber si la pelota llego al agujero
         float minimoX=this.centroX-10;
         float minimoY=this.centroY-10;
         float maximoX=this.centroX+10;
@@ -36,7 +37,7 @@ public class Agujero extends View {
         Log.i("pmCentroPelotaY",String.valueOf(pelotaY));
         Log.i("pmaximoY",String.valueOf(maximoY));
 
-
+        //comprobar si esta la pelota en el agujero o no
         if(pelotaX>minimoX && pelotaX<maximoX && pelotaY>minimoY && pelotaY<maximoY ) {
             return true;
         }
