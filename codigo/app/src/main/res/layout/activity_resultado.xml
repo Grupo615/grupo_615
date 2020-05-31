@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fin"
     tools:context=".Resultado">
 
     <TextView
         android:id="@+id/idResultado"
         android:layout_width="96dp"
         android:layout_height="43dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="nnnn"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.822"
+        app:layout_constraintHorizontal_bias="0.786"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/fin" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/fin"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:layout_marginTop="36dp"
@@ -33,20 +34,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/text2"
         android:layout_width="146dp"
         android:layout_height="44dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:text="Tu tiempo:"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/idResultado"
-        app:layout_constraintHorizontal_bias="0.354"
+        app:layout_constraintHorizontal_bias="0.389"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/fin" />
 
     <Button
         android:id="@+id/button2"
@@ -58,6 +59,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idResultado"
+        app:layout_constraintVertical_bias="0.746" />
+
+    <TextView
+        android:id="@+id/mejorTiempo"
+        android:layout_width="263dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="104dp"
+        android:text="Tu mejor tiempo"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.351"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idResultado" />
+
+    <TextView
+        android:id="@+id/mejor"
+        android:layout_width="123dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="22dp"
+        android:text="nn:nn"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mejorTiempo"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
