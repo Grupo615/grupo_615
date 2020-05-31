@@ -64,8 +64,11 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         layout1.addView(pelota); // agrega la pelota al layout
         agregarObstaculos(layout1);
         layout1.addView(temp);
+        //Servicios
+        //Temporizador
         iService = new Intent(this, ServiceTemp.class);
         startService(iService);
+        //Registrar eventos (de sensores y tiempo final del juego)
         iServiceEvento = new Intent(this, ServiceRegistroEvento.class);
         startService(iServiceEvento);
 
@@ -73,7 +76,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
 
 
     public void definirObstaculos() {
-        //obstaculo1 = new Obstaculo(this, 0, 100, 15,3,true);
+        //crea los obstaculos
         obstaculo2 = new Obstaculo(this, 300, 200, 15, 3, true);
         obstaculo3 = new Obstaculo(this, 400, 300, 15, 3, true);
         obstaculo4 = new Obstaculo(this, 30, 400, 15, 3, true);
@@ -82,7 +85,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         obstaculo7 = new Obstaculo(this, 600, 700, 15, 3, true);
         obstaculo8 = new Obstaculo(this, 200, 800, 15, 3, true);
 
-        //  listaObs.add(obstaculo1);
+        //se agregan a la lista de obstaculos
         listaObs.add(obstaculo2);
         listaObs.add(obstaculo3);
         listaObs.add(obstaculo4);
@@ -103,10 +106,9 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-
+        //Acciones cuando hay eventos de los sensores
         synchronized (this) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && play == true) {
-
                 float x = (Math.round(event.values[0] * 10f) / 10f);
                 float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
                 boolean seMovio = pelota.mover(x, y, listaObs);
@@ -115,14 +117,13 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                 if (seMovio) {
                     cantMovimientos++;
                     verFinGame();
+                    //Solo se registra el primer movimiento del sensor acelerometro
                     if (cantMovimientos == 1)
                         ServiceRegistroEvento.agregarEvento("primer movimiento de la pelota", "sensor acelerometro");
                 }
 
             }
-
             if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-
                 if (event.values[0] == 0) {
                     String descripcion = "";
                     if (play) {
@@ -134,7 +135,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                         descripcion = "el juego se reanuda";
                         tablero.setPlay(play);
                     }
-                    //  comunicacionApiRest.registrarEvento(descripcion,type_events);
+                    // comunicacionApiRest.registrarEvento(descripcion,type_events);
                     ServiceTemp.setearPlay(play);
                     ServiceRegistroEvento.agregarEvento(descripcion, "sensor Proximidad");
                 }
@@ -146,7 +147,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
 
 
     private void verFinGame() {
-        boolean termina = agujero.isCovered(pelota.getCentroX(), pelota.getCentroY());
+        boolean termina = agujero.isCovered(pelota.getCentroX(), pelota.getCentroY());//Consultar que la pelota este en el agujero
         Log.i("termin", String.valueOf(termina));
         if (termina) {
             mostrarResultado();
@@ -157,9 +158,9 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     public void mostrarResultado() {
         Intent intent = new Intent(this, Resultado.class);
         String tiempo = String.valueOf(this.temp.getTiempo());
-        intent.putExtra("resultado", tiempo);
+        intent.putExtra("resultado", tiempo);//se pasa el tiempo del final del juego a la activity resultado
         ServiceRegistroEvento.agregarEvento("fin de juego ", "finalizacion");
-        ServiceTemp.terminar();
+        ServiceTemp.terminar();//se termina el temporizador
         ServiceRegistroEvento.detener();
         startActivity(intent);
         finish();
