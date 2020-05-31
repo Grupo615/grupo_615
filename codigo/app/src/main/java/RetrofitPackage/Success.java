@@ -1,9 +1,9 @@
 package RetrofitPackage;
 
 public class Success {
-    public String state;
-    public String env;
-    public String token;
+    private String state;
+    private String env;
+    private String token;
 
     public String getState() {
         return state;

@@ -1,13 +1,13 @@
 package RetrofitPackage;
 
 public class PostRegistroLogin {
-    public String env = "DEV";
-    public String name;
-    public String lastname;
-    public int dni;
-    public String email;
-    public String password;
-    public int commission, group;
+    private String env = "DEV";
+    private String name;
+    private String lastname;
+    private int dni;
+    private String email;
+    private String password;
+    private int commission, group;
 
     public String getEnv() {
         return env;

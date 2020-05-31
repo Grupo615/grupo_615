@@ -10,9 +10,9 @@ public class ResponseEvento {
             "group": 123
 }
 }*/
-    public String state;
-    public String env;
-    public ResponseEventoArray event;
+    private String state;
+    private String env;
+    private ResponseEventoArray event;
 
     public String getState() {
         return state;

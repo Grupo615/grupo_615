@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 class ServiceManager {
-    Context context;
+    private Context context;
 
     public ServiceManager(Context base) {
         context = base;

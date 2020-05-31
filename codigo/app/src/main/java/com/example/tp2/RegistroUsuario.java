@@ -16,10 +16,8 @@ import RetrofitPackage.ComunicacionApiRest;
 import RetrofitPackage.PostRegistroLogin;
 
 public class RegistroUsuario extends AppCompatActivity {
-    private Button bt1;
     private EditText nombre, apellido, contraseña, dni, email, comision, grupo;
-    Intent intent2;
-    Context context;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

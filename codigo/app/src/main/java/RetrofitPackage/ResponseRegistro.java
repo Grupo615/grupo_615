@@ -1,17 +1,9 @@
 package RetrofitPackage;
 
 public class ResponseRegistro {
-    public String state;
-    public String env;
-    /* public PostRegistroLogin user;
+    private String state;
+    private String env;
 
-     public PostRegistroLogin getUser() {
-         return user;
-     }
-
-     public void setUser(PostRegistroLogin user) {
-         this.user = user;
-     }*/
     public String token;
 
     public String getToken() {

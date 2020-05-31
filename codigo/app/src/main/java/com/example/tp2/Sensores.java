@@ -20,14 +20,14 @@ import java.util.List;
 public class Sensores extends AppCompatActivity implements SensorEventListener {
     private List<TextView> valores_acelerometro = new ArrayList<TextView>();
     private List<TextView> valores_proximidad = new ArrayList<TextView>();
-    TextView valores_acelerometro1, valores_acelerometro2, valores_acelerometro3, valores_acelerometro4,
+    private TextView valores_acelerometro1, valores_acelerometro2, valores_acelerometro3, valores_acelerometro4,
             valores_proximidad1, valores_proximidad2, valores_proximidad3, valores_proximidad4;
-    SharedPreferences Sacelerometro, Sproximidad;
-    DecimalFormat dosdecimales = new DecimalFormat("###.###");
-    SensorManager sensorManager;
-    Sensor acelerometro;
-    Sensor proximidad;
-    int i = 0, j = 0, g = 0;
+    private SharedPreferences Sacelerometro, Sproximidad;
+    private DecimalFormat dosdecimales = new DecimalFormat("###.###");
+    private SensorManager sensorManager;
+    private Sensor acelerometro;
+    private Sensor proximidad;
+    private int i = 0, j = 0, g = 0;
 
 
     @Override

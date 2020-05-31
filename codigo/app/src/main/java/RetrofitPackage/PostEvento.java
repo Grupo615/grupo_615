@@ -6,10 +6,10 @@ public class PostEvento {
 //Broadcat, etc
 "state":"ACTIVO/INACTIVO",
 "description": String(255) //Poner un descripción de lo sucedido en el evento registrado*/
-    public String env;
-    public String type_events;
-    public String state;
-    public String description;
+    private String env;
+    private String type_events;
+    private String state;
+    private String description;
 
     public String getEnv() {
         return env;

@@ -15,17 +15,17 @@ import java.util.List;
 
 
 public class Pelota extends View {
-    Paint paint;
-    float ancho; // de canvas
-    float largo;// de canvas
-    float posX = 0, posY = 0;  // posiciones iniciales
-    float anteriorX = 0, anteriorY = 0;
-    boolean primera = true;
-    Bitmap bitmap;
+    private Paint paint;
+    private float ancho; // de canvas
+    private float largo;// de canvas
+    private float posX = 0, posY = 0;  // posiciones iniciales
+    private float anteriorX = 0, anteriorY = 0;
+    private boolean primera = true;
+    private Bitmap bitmap;
     private int mWidth;
     private int mHeight;
     private Bitmap pelota;
-    float espacioMovimiento = this.ancho / 135;
+    private float espacioMovimiento = this.ancho / 135;
     private float centroX;
     private float centroY;
     private float radio;

@@ -9,18 +9,17 @@ import android.view.View;
 
 
 public class Tablero extends View {
-    Bitmap bitmap, bitmap2;
-    Bitmap tablero, pausa;
+    private Bitmap bitmap;
+    private Bitmap tablero;
     private int mHeigth;
     private int mWidth;
-    Paint paint;
-    boolean play = true;
+    private Paint paint;
+    private boolean play = true;
 
 
     public Tablero(Context context) {
         super(context);
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.madera);
-        bitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.pausa);
         paint = new Paint();
 
     }
@@ -29,7 +28,7 @@ public class Tablero extends View {
         mHeigth = getHeight();
         mWidth = getWidth();
         tablero = Bitmap.createScaledBitmap(bitmap, mWidth, mHeigth, true);
-        pausa = Bitmap.createScaledBitmap(bitmap2, mWidth / 4, mHeigth / 8, true);
+
     }
 
     public void setPlay(boolean play) {
@@ -39,8 +38,6 @@ public class Tablero extends View {
 
     public void onDraw(Canvas canvas) {
         canvas.drawBitmap(tablero, 0, 0, null);
-        if (!this.play)
-            canvas.drawBitmap(pausa, getWidth() / 3, getHeight() / 3, paint);
 
     }
 }

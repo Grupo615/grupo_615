@@ -5,9 +5,9 @@ public class ResponseEventoArray {
             "state": "Activo",
             "description": "Broadcast que detecta la desconexión 3G",
             "group": 123*/
-    public String type_events;
-    public String state;
-    public String description;
+    private String type_events;
+    private String state;
+    private String description;
 
     public int getGroup() {
         return group;

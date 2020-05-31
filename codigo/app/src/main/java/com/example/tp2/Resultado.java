@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Resultado extends AppCompatActivity {
-    TextView resultado,fin,text2,mejor,mejorTiempo;
-    String tiempo,tiempoInt;
+    private TextView resultado,fin,text2,mejor,mejorTiempo;
+    private String tiempo,tiempoInt;
 
 
     @Override

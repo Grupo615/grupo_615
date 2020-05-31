@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.view.View;
 
 public class Temporizador extends View {
-    Paint paint;
+    private Paint paint;
     private int minutos = 0;
     private int segundos = 0;
 

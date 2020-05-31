@@ -41,6 +41,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     DecimalFormat dosdecimales = new DecimalFormat("###.###");
     Intent iServiceEvento;
     private int cantMovimientos;
+    private Pausa pausa;
 
 
     @Override
@@ -58,11 +59,13 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         temp = new Temporizador(this);
         receiverTemp = new BroadcastReceiverTemp(temp);
         agujero = new Agujero(this);
+        pausa=new Pausa(this);
         definirObstaculos();
         layout1.addView(tablero);
         layout1.addView(agujero);
         layout1.addView(pelota); // agrega la pelota al layout
         agregarObstaculos(layout1);
+        layout1.addView(pausa);
         layout1.addView(temp);
         //Servicios
         //Temporizador
@@ -130,10 +133,12 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                         play = false;
                         descripcion = "el juego se puso en pausa";
                         tablero.setPlay(play);
+                        pausa.setVisible(true);
                     } else {
                         play = true;
                         descripcion = "el juego se reanuda";
                         tablero.setPlay(play);
+                        pausa.setVisible(false);
                     }
                     // comunicacionApiRest.registrarEvento(descripcion,type_events);
                     ServiceTemp.setearPlay(play);
