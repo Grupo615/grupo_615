@@ -49,7 +49,7 @@ public class Pelota extends View {
     protected void onDraw(Canvas canvas) {
 
         this.ancho = canvas.getWidth();
-        espacioMovimiento = this.ancho / 135;
+        espacioMovimiento = this.ancho / 120;
         this.largo = canvas.getHeight();
         this.centroX = posX + radio;
         this.centroY = posY + radio;
@@ -162,7 +162,7 @@ public class Pelota extends View {
 
     public void coordenadasArribaAbajo(List<Coordenada> coordenadasArriba, List<Coordenada> coordenadasAbajo) {
         float x;
-        for (x = centroX - radio + 1; x < centroX + radio; x += 1) {
+        for (x = centroX - radio + 3; x < centroX + radio; x += 3) {
             Coordenada coordenada = new Coordenada();
             coordenada.setX(x);
             coordenada.establecerY(radio, centroX, centroY, true);
@@ -176,7 +176,7 @@ public class Pelota extends View {
 
     public void coordenadasIzqDer(List<Coordenada> coordenadasIzq, List<Coordenada> coordenadasDer) {
         float y;
-        for (y = centroY - radio + 1; y < centroY + radio; y += 1) {
+        for (y = centroY - radio + 3; y < centroY + radio; y += 3) {
             Coordenada coordenada = new Coordenada();
             coordenada.setY(y);
             coordenada.establecerX(radio, centroX, centroY, true);
