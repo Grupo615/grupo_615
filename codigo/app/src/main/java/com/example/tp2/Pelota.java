@@ -49,7 +49,7 @@ public class Pelota extends View {
     protected void onDraw(Canvas canvas) {
 
         this.ancho = canvas.getWidth();
-        espacioMovimiento = this.ancho / 120;
+        espacioMovimiento = this.ancho / 110;
         this.largo = canvas.getHeight();
         this.centroX = posX + radio;
         this.centroY = posY + radio;
