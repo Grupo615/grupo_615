@@ -76,7 +76,7 @@ public class Pelota extends View {
         }
         List<Boolean> puede = sinObstaculo(listaObs); // le paso la lista de obstaculos y me dice para donde se puede mover
         //abajo,arriba,izquierda,derecha
-// se mueve si cambio el x
+        // se mueve si cambio el x
         if (anteriorX != x) {
             if (puede.get(3) && x < margenInferior && posX + this.mWidth < this.ancho) { //mueve hacia la derecha
                 posX += espacioMovimiento;
@@ -88,7 +88,6 @@ public class Pelota extends View {
             anteriorX = x;
         }
         // se mueve si cambio Y
-
         if (anteriorY != y) {
             if (puede.get(1) && y < margenInferior && posY > 0) { //muevo hacia arriba
                 posY -= espacioMovimiento;
