@@ -10,11 +10,9 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.CollationElementIterator;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,7 @@ public class Sensores extends AppCompatActivity implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         proximidad = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-
+        //Referenciar textView de activity con variables de la clase
         valores_acelerometro1 = (TextView) findViewById(R.id.Vacelerometro);
         valores_acelerometro2 = (TextView) findViewById(R.id.Vacelerometro2);
         valores_acelerometro3 = (TextView) findViewById(R.id.Vacelerometro3);
@@ -49,7 +47,8 @@ public class Sensores extends AppCompatActivity implements SensorEventListener {
         valores_proximidad2 = (TextView) findViewById(R.id.vproximidad2);
         valores_proximidad3 = (TextView) findViewById(R.id.vproximidad3);
         valores_proximidad4 = (TextView) findViewById(R.id.vproximidad4);
-
+        //Leer el archivo xml de preferencias de los sensores
+        //Sensor acelerometro
         SharedPreferences prefs =
                 getSharedPreferences("acelerometro", Context.MODE_PRIVATE);
 
@@ -60,7 +59,7 @@ public class Sensores extends AppCompatActivity implements SensorEventListener {
         valores_acelerometro2.setText(valores1);
         valores_acelerometro3.setText(valores2);
         valores_acelerometro4.setText(valores3);
-
+        //Sensor proximidad
         SharedPreferences prefs2 =
                 getSharedPreferences("proximidad", Context.MODE_PRIVATE);
 
@@ -77,6 +76,7 @@ public class Sensores extends AppCompatActivity implements SensorEventListener {
     @Override
     protected void onResume() {
         super.onResume();
+        //Registrarse a los eventos del sensor
         sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, proximidad, SensorManager.SENSOR_DELAY_NORMAL);
     }
@@ -96,7 +96,7 @@ public class Sensores extends AppCompatActivity implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         synchronized (this) {
-
+            //Acciones si hay eventos del sensor
             switch (event.sensor.getType()) {
                 case Sensor.TYPE_ACCELEROMETER:
                     String txt = "x: " + dosdecimales.format(event.values[0]) + " m/seg2 \n";
@@ -132,6 +132,7 @@ public class Sensores extends AppCompatActivity implements SensorEventListener {
     }
 
     private void guardarPreferencias(SharedPreferences preferencias, String txt, boolean acelerometro, int n) {
+        //guardamos segun que sensor realice el evento
         if (acelerometro) {
             preferencias = getSharedPreferences("acelerometro", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferencias.edit();
