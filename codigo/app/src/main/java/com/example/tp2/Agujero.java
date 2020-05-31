@@ -25,10 +25,10 @@ public class Agujero extends View {
     }
 
     public boolean isCovered(float pelotaX,float pelotaY){
-        float minimoX=this.centroX-5;
-        float minimoY=this.centroY-5;
-        float maximoX=this.centroX+5;
-        float maximoY=this.centroY+5;
+        float minimoX=this.centroX-10;
+        float minimoY=this.centroY-10;
+        float maximoX=this.centroX+10;
+        float maximoY=this.centroY+10;
         Log.i("pminimoX",String.valueOf(minimoX));
         Log.i("pmCentroPelotaX",String.valueOf(pelotaX));
         Log.i("pmaximoX",String.valueOf(maximoX));
