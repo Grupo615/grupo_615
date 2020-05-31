@@ -27,6 +27,7 @@ public class ServiceTemp extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        //Temporizador en Background
         tiempoInicial = (int) System.currentTimeMillis();
         while (!termino) {
             Intent i = new Intent();
