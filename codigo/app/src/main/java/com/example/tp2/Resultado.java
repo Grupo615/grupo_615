@@ -51,6 +51,7 @@ public class Resultado extends AppCompatActivity {
 
 
     private void guardarPreferencias( SharedPreferences preferencias,String txt){
+        //Guardamos el mejor tiempo del jugador
         preferencias = getSharedPreferences("mejorTiempo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("tiempo",txt);
@@ -58,11 +59,13 @@ public class Resultado extends AppCompatActivity {
     }
 
     private void procesarPreferencias(){
+
         SharedPreferences prefs3 =
                 getSharedPreferences("mejorTiempo", Context.MODE_PRIVATE);
 
         String valor = prefs3.getString("tiempo","");
         String[] arraytiempo = tiempo.split(":");
+        //Paso tiempo de minutos y segundos a milisegundos para comprar el tiempo final del juego con su menor tiempo
         int minutos = Integer.parseInt(arraytiempo[0]);
         int segundos = Integer.parseInt(arraytiempo[1]);
         int milisegundos = minutos*60000 + segundos * 1000;
@@ -80,7 +83,7 @@ public class Resultado extends AppCompatActivity {
         }
         Log.i("mejortiempo",String.valueOf(mt));
         Log.i("tiempo",String.valueOf(t));
-
+        //Si el tiempo realizado es menor a el mejor tiempo del jugador lo guardamos
         if(mt>t || mt==0){
             guardarPreferencias(prefs3, tiempo);
         }else{
