@@ -63,7 +63,7 @@ public class LoginUsuario extends AppCompatActivity {
         postRegistroLogin.setEmail(email.getText().toString());
         postRegistroLogin.setPassword(contraseña.getText().toString());
         //  comunicacionApiRest.enviarLogin(postRegistroLogin);
-
+/*
         RestAdapter restAdapter = new RestAdapter();
         InterfazRestApi interfazRestApi = restAdapter.conectar();
         Call<ResponseLogin> responseLoginCall = interfazRestApi.logearse(postRegistroLogin);
@@ -93,7 +93,9 @@ public class LoginUsuario extends AppCompatActivity {
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+    ComunicacionApiRest comunicacionApiRest = new ComunicacionApiRest(this);
+    comunicacionApiRest.enviarLogin(postRegistroLogin,LoginUsuario.this);
 
     }
 

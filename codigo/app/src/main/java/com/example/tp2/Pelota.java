@@ -18,7 +18,7 @@ public class Pelota extends View {
     Paint paint;
     float ancho; // de canvas
     float largo;// de canvas
-    float posX =0,posY =0;  // posiciones iniciales
+    float posX = 0, posY = 0;  // posiciones iniciales
     float anteriorX = 0, anteriorY = 0;
     boolean primera = true;
     Bitmap bitmap;
@@ -41,8 +41,8 @@ public class Pelota extends View {
         mWidth = getWidth() / 7;
         mHeight = getWidth() / 7;
         radio = mWidth / 2;
-        centroY=posY+radio;
-        centroX=posX+radio;
+        centroY = posY + radio;
+        centroX = posX + radio;
         pelota = Bitmap.createScaledBitmap(bitmap, mWidth, mHeight, true); // redimensiona el bitmap
     }
 
@@ -52,7 +52,7 @@ public class Pelota extends View {
         espacioMovimiento = this.ancho / 135;
         this.largo = canvas.getHeight();
         this.centroX = posX + radio;
-       this.centroY = posY + radio;
+        this.centroY = posY + radio;
         canvas.drawBitmap(pelota, posX, posY, null);
     }
 
@@ -102,8 +102,9 @@ public class Pelota extends View {
         return seMovio;
 
     }
-    public float getRadio(){
-       return this.radio;
+
+    public float getRadio() {
+        return this.radio;
     }
 
     public List<Boolean> sinObstaculo(List<Obstaculo> lista) {
@@ -188,12 +189,12 @@ public class Pelota extends View {
     }
 
     public float getCentroX() {
-        Log.i("getCentroX",String.valueOf(this.centroX));
+        Log.i("getCentroX", String.valueOf(this.centroX));
         return this.centroX;
     }
 
     public float getCentroY() {
-        Log.i("getCentroY",String.valueOf(this.centroY));
+        Log.i("getCentroY", String.valueOf(this.centroY));
         return this.centroY;
     }
 

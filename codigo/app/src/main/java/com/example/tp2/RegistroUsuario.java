@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
+import RetrofitPackage.ComunicacionApiRest;
 import RetrofitPackage.ConstantesRest;
 import RetrofitPackage.ErrorResponse;
 import RetrofitPackage.InterfazRestApi;
@@ -97,7 +98,7 @@ public class RegistroUsuario extends AppCompatActivity {
         postRegistroLogin.setLastname(lastnameString);
         postRegistroLogin.setName(nameString);
         postRegistroLogin.setPassword(passwordString);
-
+/*
         RestAdapter restAdapter = new RestAdapter();
 
 
@@ -127,12 +128,14 @@ public class RegistroUsuario extends AppCompatActivity {
                 Toast.makeText(context, "fallo la conexion", Toast.LENGTH_LONG).show();
             }
         });
-
+*/
+        ComunicacionApiRest comunicacionApiRest = new ComunicacionApiRest(this);
+        comunicacionApiRest.enviarPostRegitro(postRegistroLogin);
 
     }
 
-    private void usuarioRegistrado() {
-        PostEvento postEvento= new PostEvento();
+  /*  private void usuarioRegistrado() {
+       /* PostEvento postEvento= new PostEvento();
         postEvento.setEnv("TEST");
         postEvento.setDescription("el usuario ha sido registrado correctamente");
         postEvento.setState("ACTIVO");
@@ -169,7 +172,11 @@ public class RegistroUsuario extends AppCompatActivity {
         });
 
 
+        ComunicacionApiRest comunicacionApiRest = new ComunicacionApiRest();
+        comunicacionApiRest.registrarEvento("usuario Registrado","registro");
+
     }
+    */
 
     public void irLogin(View v) {
 

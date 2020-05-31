@@ -1,10 +1,10 @@
 package RetrofitPackage;
 
 public class ResponseLogin {
-   private String state;
-   private String env;
-   private String token;
-   private String msg;
+    private String state;
+    private String env;
+    private String token;
+    private String msg;
 
     public String getState() {
         return state;

@@ -27,8 +27,9 @@ public class Temporizador extends View {
         this.segundos = segundos % 60;
         invalidate();
     }
-    public String getTiempo(){
-        return  minutos+":"+segundos;
+
+    public String getTiempo() {
+        return minutos + ":" + segundos;
     }
-    
+
 }

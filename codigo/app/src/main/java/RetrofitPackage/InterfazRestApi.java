@@ -15,7 +15,7 @@ public interface InterfazRestApi {
 
 
     @POST("event")
-    Call<ResponseEvento> registrarEvento(@Header("token") String token,@Body PostEvento postEvento);
+    Call<ResponseEvento> registrarEvento(@Header("token") String token, @Body PostEvento postEvento);
 
 
 }

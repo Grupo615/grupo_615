@@ -32,19 +32,21 @@ public class ServiceRegistroEvento extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         while (enEjecucion) {
-          /*  try {
-                sleep(20000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
+
 
             while (!descripciones.isEmpty() && !type_events.isEmpty()) {
+
 
                 String descripcion = descripciones.poll();
                 String type_event = type_events.poll();
 
                 ComunicacionApiRest comunicacionApiRest = new ComunicacionApiRest();
                 comunicacionApiRest.registrarEvento(descripcion, type_event);
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
 
             }

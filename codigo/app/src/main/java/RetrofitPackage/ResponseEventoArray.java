@@ -7,7 +7,7 @@ public class ResponseEventoArray {
             "group": 123*/
     public String type_events;
     public String state;
-    public String  description;
+    public String description;
 
     public int getGroup() {
         return group;

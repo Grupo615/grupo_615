@@ -1,7 +1,7 @@
 package RetrofitPackage;
 
 public class ErrorResponse {
-    public  String state;
+    public String state;
     public String msg;
     public String env;
 

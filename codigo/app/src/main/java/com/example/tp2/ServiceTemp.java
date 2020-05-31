@@ -10,10 +10,10 @@ public class ServiceTemp extends IntentService {
     private int tiempo = 0;
     private int tiempoEnPausa = 0;
     private int inicioPausa;
-    private  static  boolean termino = false;
+    private static boolean termino = false;
     private int milisegundos;
     private int tiempoInicial;
-    private static  boolean play = true;
+    private static boolean play = true;
 
 
     public ServiceTemp() {
@@ -21,11 +21,11 @@ public class ServiceTemp extends IntentService {
     }
 
     public static void setearPlay(boolean nPlay) {
-        play=nPlay;
+        play = nPlay;
     }
 
 
-        @Override
+    @Override
     protected void onHandleIntent(Intent intent) {
         tiempoInicial = (int) System.currentTimeMillis();
         while (!termino) {
@@ -50,8 +50,8 @@ public class ServiceTemp extends IntentService {
             }
 
         }
-        termino=false;
-        play=true;
+        termino = false;
+        play = true;
     }
 
     private void calcularTiempo() {
@@ -59,13 +59,14 @@ public class ServiceTemp extends IntentService {
         this.tiempo = (milisegundos - tiempoInicial - tiempoEnPausa) / 1000;
 
     }
-    public static void terminar(){
-        Log.i("verTermina",String.valueOf(termino));
-        termino=true;
+
+    public static void terminar() {
+        Log.i("verTermina", String.valueOf(termino));
+        termino = true;
     }
 
 
-    }
+}
 
 
 

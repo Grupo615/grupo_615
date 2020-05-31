@@ -16,16 +16,16 @@ public class Resultado extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado);
-        Intent i= getIntent();
-        Bundle bundle=i.getExtras();
-        tiempo=bundle.getString("resultado");
-        resultado= findViewById(R.id.idResultado);
+        Intent i = getIntent();
+        Bundle bundle = i.getExtras();
+        tiempo = bundle.getString("resultado");
+        resultado = findViewById(R.id.idResultado);
         resultado.setText(tiempo);
 
     }
 
-    public void volverAJugar (View v){
-        Intent intent=new Intent(Resultado.this,MenuPrincipal.class);
+    public void volverAJugar(View v) {
+        Intent intent = new Intent(Resultado.this, MenuPrincipal.class);
         startActivity(intent);
     }
 

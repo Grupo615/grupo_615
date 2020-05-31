@@ -40,7 +40,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
     SharedPreferences Sacelerometro, Sproximidad;
     DecimalFormat dosdecimales = new DecimalFormat("###.###");
     Intent iServiceEvento;
-
+    private int cantMovimientos;
 
 
     @Override
@@ -111,10 +111,12 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                 float y = (Math.round(event.values[1] * 10f) / 10f); // redondeo a 1 decimales
                 boolean seMovio = pelota.mover(x, y, listaObs);
                 pelota.invalidate();
-                if (seMovio) {
 
+                if (seMovio) {
+                    cantMovimientos++;
                     verFinGame();
-                    ServiceRegistroEvento.agregarEvento("la pelota se movio","sensor acelerometro");
+                    if (cantMovimientos == 1)
+                        ServiceRegistroEvento.agregarEvento("primer movimiento de la pelota", "sensor acelerometro");
                 }
 
             }
@@ -134,7 +136,7 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
                     }
                     //  comunicacionApiRest.registrarEvento(descripcion,type_events);
                     ServiceTemp.setearPlay(play);
-                    ServiceRegistroEvento.agregarEvento(descripcion,"sensor Proximidad");
+                    ServiceRegistroEvento.agregarEvento(descripcion, "sensor Proximidad");
                 }
 
             }
@@ -148,15 +150,17 @@ public class Juego extends AppCompatActivity implements SensorEventListener {
         Log.i("termin", String.valueOf(termina));
         if (termina) {
             mostrarResultado();
-            ServiceTemp.terminar();
-            ServiceRegistroEvento.detener();
         }
 
     }
 
     public void mostrarResultado() {
         Intent intent = new Intent(this, Resultado.class);
-        intent.putExtra("resultado", String.valueOf(this.temp.getTiempo()));
+        String tiempo = String.valueOf(this.temp.getTiempo());
+        intent.putExtra("resultado", tiempo);
+        ServiceRegistroEvento.agregarEvento("fin de juego ", "finalizacion");
+        ServiceTemp.terminar();
+        ServiceRegistroEvento.detener();
         startActivity(intent);
         finish();
     }

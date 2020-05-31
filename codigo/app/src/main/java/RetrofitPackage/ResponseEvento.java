@@ -11,7 +11,7 @@ public class ResponseEvento {
 }
 }*/
     public String state;
-    public  String env;
+    public String env;
     public ResponseEventoArray event;
 
     public String getState() {
@@ -37,7 +37,6 @@ public class ResponseEvento {
     public void setEvent(ResponseEventoArray event) {
         this.event = event;
     }
-
 
 
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tp2.LoginUsuario;
+import com.example.tp2.RegistroUsuario;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -17,58 +19,77 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ComunicacionApiRest {
-
+private Context context;
     public ComunicacionApiRest(){}
-
-/*
-    public void enviarPostRegitro(PostRegistroLogin postRegistroLogin,ResponseRegistro responseRegistro){
-        RestAdapter restAdapter=new RestAdapter();
-        responseRegistro=new ResponseRegistro();
+    public  ComunicacionApiRest(Context context){
+        this.context=context;
+    }
 
 
-    InterfazRestApi interfazRestApi = restAdapter.conectar();
-    Call<ResponseRegistro> responseRegistroCall=interfazRestApi.registarUsuario(postRegistroLogin);
-    responseRegistroCall.enqueue(new Callback<ResponseRegistro>() {
-        @Override
-        public void onResponse(Call<ResponseRegistro> call, Response<ResponseRegistro> response) {
-           responseRegistro.setEnv(response.body().env);
-           responseRegistro.setState(response.body().state);
-           responseRegistro.setUser(response.body().user);
-        }
 
-        @Override
-        public void onFailure(Call<ResponseRegistro> call, Throwable t) {
+    public void enviarPostRegitro(PostRegistroLogin postRegistroLogin){
+        RestAdapter restAdapter = new RestAdapter();
+        // responseRegistro=new ResponseRegistro();
+        InterfazRestApi interfazRestApi = restAdapter.conectar();
+        Call<ResponseRegistro> responseRegistroCall = interfazRestApi.registarUsuario(postRegistroLogin);
+        responseRegistroCall.enqueue(new Callback<ResponseRegistro>() {
+            @Override
+            public void onResponse(Call<ResponseRegistro> call, Response<ResponseRegistro> response) {
 
-        }
-    });
+                if (response.body() == null) {
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<ErrorResponse>() {
+                    }.getType();
+                    ErrorResponse errorResponse = gson.fromJson(response.errorBody().charStream(), type);
+                    Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
+                } else if (response.body().getState().equals("success")) {
+                    Toast.makeText(context, "Registrado correctamente", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseRegistro> call, Throwable t) {
+                Toast.makeText(context, "fallo la conexion", Toast.LENGTH_LONG).show();
+            }
+        });
 
 
     }
 
-public void enviarLogin(PostRegistroLogin postRegistroLogin) {
+public void enviarLogin(PostRegistroLogin postRegistroLogin, LoginUsuario loginUsuario) {
     RestAdapter restAdapter = new RestAdapter();
-
-
-
     InterfazRestApi interfazRestApi = restAdapter.conectar();
     Call<ResponseLogin> responseLoginCall = interfazRestApi.logearse(postRegistroLogin);
     responseLoginCall.enqueue(new Callback<ResponseLogin>() {
         @Override
         public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-            if(response.body().getSuccess()!=null && response.body().getSuccess().getState().equals("success"))
-                Toast.makeText(context,"ok",Toast.LENGTH_LONG).show();
-            else if( response.body().getError().getState().equals("error"))
-                Toast.makeText(context,"error en login", Toast.LENGTH_LONG).show();
+
+            if (response.body() == null) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<ErrorResponse>() {
+                }.getType();
+                ErrorResponse errorResponse = gson.fromJson(response.errorBody().charStream(), type);
+                Log.i("errorResponseMsg", errorResponse.getMsg());
+                Log.i("errorResponseState", errorResponse.getState());
+                Toast.makeText(context, errorResponse.getMsg(), Toast.LENGTH_LONG).show();
+
+            } else if (response.body().getState().equals("success")) {
+                Toast.makeText(context, "login exitoso", Toast.LENGTH_LONG).show();
+                ConstantesRest.setToken(response.body().getToken());
+               loginUsuario.irMenu();
+            }
+
 
         }
 
         @Override
         public void onFailure(Call<ResponseLogin> call, Throwable t) {
-
+            Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     });
 }
-*/
 public void registrarEvento(String descripcion,String type_events){
     PostEvento postEvento= new PostEvento();
     postEvento.setEnv("TEST");

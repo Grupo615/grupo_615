@@ -3,16 +3,16 @@ package RetrofitPackage;
 public class ResponseRegistro {
     public String state;
     public String env;
-   /* public PostRegistroLogin user;
+    /* public PostRegistroLogin user;
 
-    public PostRegistroLogin getUser() {
-        return user;
-    }
+     public PostRegistroLogin getUser() {
+         return user;
+     }
 
-    public void setUser(PostRegistroLogin user) {
-        this.user = user;
-    }*/
- public String token;
+     public void setUser(PostRegistroLogin user) {
+         this.user = user;
+     }*/
+    public String token;
 
     public String getToken() {
         return token;
@@ -21,7 +21,6 @@ public class ResponseRegistro {
     public void setToken(String token) {
         this.token = token;
     }
-
 
 
     public String getEnv() {
