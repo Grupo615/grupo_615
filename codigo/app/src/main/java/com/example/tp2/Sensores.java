@@ -65,7 +65,7 @@ public class Sensores extends AppCompatActivity implements SensorEventListener {
 
         String valores4 = prefs2.getString("valoresP0", "no hay valor");
         String valores5 = prefs2.getString("valoresP1", "no hay valor");
-        String valores6 = prefs2.getString("valoresP", "no hay valor");
+        String valores6 = prefs2.getString("valoresP2", "no hay valor");
 
         valores_proximidad2.setText(valores4);
         valores_proximidad3.setText(valores5);
